@@ -60,31 +60,22 @@ const float VIEW_WIDTH = 8625;
     [scrollView setContentSize:CGSizeMake(VIEW_WIDTH, self.view.frame.size.height-100)];
     [self.view addSubview:scrollView];
     
-    NSDate *nowTime = [NSDate dateWithTimeIntervalSinceNow:0.0f];
-    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-    [fmt setDateFormat:@"HH:mm"];
-    
-    NSCalendar* cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSCalendarUnit unitFlags =  NSCalendarUnitHour | NSCalendarUnitMinute;
-    
-    NSDate *nowTime_DB = [NSDate date];
-    NSDateComponents *dateComponents = [cal components:unitFlags fromDate:nowTime_DB];
-    
-    NSInteger hour = dateComponents.hour;
-    NSInteger minute = dateComponents.minute;
-    
-#pragma mark ###時間設定###
-    
     
     NSDateFormatter *formater = [[NSDateFormatter alloc] init];
-    [formater setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
-    NSString *nowtime_S = [formater stringFromDate:nowTime_DB];
-    NSLog(@"TIME:%@",nowtime_S);
-    NSUserDefaults* ud = [NSUserDefaults  standardUserDefaults];
+    [formater setDateFormat:@"YYYY-MM-dd HH:mm:ss"];//DB用
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    [fmt setDateFormat:@"HH:mm"];//表示用
+    NSDateFormatter *hour_Fmt = [[NSDateFormatter alloc] init];
+    [fmt setDateFormat:@"dd HH"];//表示用
+    
+    NSDate *nowTime = [NSDate date];//現在時刻
+    
+    NSString *dbTime_String = [formater stringFromDate:nowTime];//DB用時刻文字
+    
     NSURL *url = [NSURL URLWithString:@"http://ec2-52-69-253-248.ap-northeast-1.compute.amazonaws.com/api/allSensor"];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     request.HTTPMethod = @"POST";
-    NSString *body = [NSString stringWithFormat:@"edisonName=%@&startTime=%@&duration=%d",[NSString stringWithFormat:@"kame03"],nowtime_S,60];
+    NSString *body = [NSString stringWithFormat:@"edisonName=%@&startTime=%@&duration=%d",[NSString stringWithFormat:@"kame03"],dbTime_String,60];
     request.HTTPBody = [body dataUsingEncoding:NSUTF8StringEncoding];
     for (int i = 0; i < 144; i++) {
         contentsView[i] = [[UIImageView alloc] init];
@@ -99,21 +90,67 @@ const float VIEW_WIDTH = 8625;
         NSError* error=nil;
         NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         NSLog(@"%@",jsonArray);
+        int daysToAdd = -1;
+        NSCalendar* cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        NSCalendarUnit unitFlags =  NSCalendarUnitDay| NSCalendarUnitHour | NSCalendarUnitMinute;
+        NSDateComponents *dateComponents_Hour = [cal components:unitFlags fromDate:nowTime];
+        NSInteger day_Axis = dateComponents_Hour.day;//時間
+        NSInteger hour_Axis = dateComponents_Hour.hour;//時間
+        NSDate* comp_Hour = [hour_Fmt dateFromString:[NSString stringWithFormat:@"%02ld %02ld",(long)day_Axis,(long)hour_Axis]];
+        
         for (int i = 1; i < 145; i++) {
             if (true) {
-                int daysToAdd = 1;
-                NSDate *newDate1 = [now dateByAddingTimeInterval:60*60*24*daysToAdd];
+                NSDate *before_Date = [nowTime dateByAddingTimeInterval:60*10*daysToAdd];
                 
+                daysToAdd--;
                 
-                double before_Time = -(i*10*60);
-                NSDate *ten_Timeago = [nowTime initWithTimeInterval:before_Time sinceDate:nowTime];
-                NSString *afterTimeString = [fmt stringFromDate:ten_Timeago];
+                NSCalendar* cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+                NSCalendarUnit unitFlags =  NSCalendarUnitDay|NSCalendarUnitHour | NSCalendarUnitMinute;
+                
+                NSDateComponents *dateComponents = [cal components:unitFlags fromDate:before_Date];
+                NSInteger day_Before = dateComponents.day;
+                NSInteger hour_Before = dateComponents.hour;//修正時間
+                NSInteger minute_Before = dateComponents.minute;//修正分
+                
+                NSDate* comp_Hour_Before = [hour_Fmt dateFromString:[NSString stringWithFormat:@"%02ld %02ld",(long)day_Before,(long)hour_Before]];
+                NSComparisonResult result = [comp_Hour compare:comp_Hour_Before];
+                switch(result) {
+                    case NSOrderedSame: // 一致したとき
+                        NSLog(@"同じ日付です");
+                        break;
+                        
+                    case NSOrderedAscending: // date1が小さいとき
+                        NSLog(@"異なる日付です（date1のが小）");
+                        break;
+                        
+                    case NSOrderedDescending: // date1が大きいとき
+                        NSLog(@"異なる日付です（date1のが大）");
+                        break;
+                }
+                NSLog(@"%ld分",(long)minute_Before);
+                
+                if (hour_Axis > hour_Before) {
+                    
+                }
+                hour_Axis =hour_Before;
+//                if (minute_Before>10) {
+//                    minute_Before = (minute_Before/10)*10;
+//                }
+//                else{
+//                    minute_Before=0;
+//                }
+                NSString* mod_Time_String = [NSString stringWithFormat:@"%02ld:%02ld",hour_Before,minute_Before];
+                
                 UILabel *time_Label = [[UILabel alloc] init];
                 time_Label.frame = CGRectMake(0, 10, 65, 18);
                 time_Label.textColor = [UIColor blackColor];
                 time_Label.font = [UIFont fontWithName:@"RuikaKyohkan-05" size:13];
                 time_Label.textAlignment = NSTextAlignmentLeft;
-                time_Label.text = afterTimeString;
+                
+                if (minute_Before==00) {
+                    time_Label.text = mod_Time_String;
+                }
+                
                 UILabel *temp_Label = [[UILabel alloc] init];
                 temp_Label.frame = CGRectMake(0, 25, 35, 18);
                 temp_Label.font = [UIFont fontWithName:@"RuikaKyohkan-05" size:13];
@@ -122,15 +159,15 @@ const float VIEW_WIDTH = 8625;
                 UIButton *btn_Photo  = [UIButton buttonWithType:UIButtonTypeCustom];
                 btn_Photo.frame = CGRectMake(-5, 50, 40, 40);
                 [btn_Photo setImage:[UIImage imageNamed:@"photo.png"] forState:UIControlStateNormal];
-                [btn_Photo addTarget:self action:@selector(touch_btnPhoto) forControlEvents:UIControlEventTouchUpInside];
+                [btn_Photo addTarget:self action:@selector(touch_btnPhoto:) forControlEvents:UIControlEventTouchUpInside];
                 UIButton *btn_Voice  = [UIButton buttonWithType:UIButtonTypeCustom];
                 btn_Voice.frame = CGRectMake(-5, 120, 40, 40);
                 [btn_Voice setImage:[UIImage imageNamed:@"sound.png"] forState:UIControlStateNormal];
-                [btn_Voice addTarget:self action:@selector(touch_btnVoice) forControlEvents:UIControlEventTouchUpInside];
+                [btn_Voice addTarget:self action:@selector(touch_btnVoice:) forControlEvents:UIControlEventTouchUpInside];
                 UIButton *btn_Touch  = [UIButton buttonWithType:UIButtonTypeCustom];
                 btn_Touch.frame = CGRectMake(-5, 190, 40, 40);
                 [btn_Touch setImage:[UIImage imageNamed:@"touch.png"] forState:UIControlStateNormal];
-                [btn_Touch addTarget:self action:@selector(touch_btnTouch) forControlEvents:UIControlEventTouchUpInside];
+                [btn_Touch addTarget:self action:@selector(touch_btnTouch:) forControlEvents:UIControlEventTouchUpInside];
                 [contentsView[i] addSubview:time_Label];
                 [contentsView[i] addSubview:temp_Label];
                 [contentsView[i] addSubview:btn_Touch];
@@ -144,15 +181,17 @@ const float VIEW_WIDTH = 8625;
     [NSTimer scheduledTimerWithTimeInterval:600 target:self selector:@selector(requestSenserDatas:) userInfo:nil repeats:YES];
 }
 
--(void)touch_btnPhoto{
+#pragma mark ###写真がタッチされたら呼ばれる###
+-(void)touch_btnPhoto:(NSURL*)url{
 
 }
 
--(void)touch_btnVoice{
+#pragma mark ###音声がタッチされたら呼ばれる###
+-(void)touch_btnVoice:(NSURL*)url{
 
 }
-
--(void)touch_btnTouch{
+#pragma mark ###触るがタッチされたら呼ばれる###
+-(void)touch_btnTouch:(BOOL)isTouch{
 
 }
 
