@@ -21,10 +21,43 @@ const float VIEW_WIDTH = 8700;
 - (void)viewDidLoad {
     [super viewDidLoad];
 #pragma makrk ###アニメーション###
-    NSMutableArray *imageList = [NSMutableArray array];
     
-    for (int i = 0; i <= 50; i++) {
-        NSString *imagePath = [NSString stringWithFormat:@"minagame_%03d.png", i];
+    UIImage *image = [UIImage imageNamed:@"minagame1_001.png"];
+    UIImageView *imageview = [[UIImageView alloc]initWithImage:image];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
+    
+    // CAKeyframeAnimationオブジェクトを生成
+    CAKeyframeAnimation *animation;
+    animation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+    animation.fillMode = kCAFillModeForwards;
+    animation.removedOnCompletion = NO;
+    animation.duration = 4.5;
+    
+    
+    // 放物線のパスを生成
+    CGFloat jumpHeight = 130;
+    CGFloat kStartPosx = 0;
+    CGFloat kStartPosy = 500;
+    CGFloat kEndPosx = 400;
+    CGFloat kEndPosy = 500;
+    
+    CGMutablePathRef curvedPath = CGPathCreateMutable();
+    CGPathMoveToPoint(curvedPath, NULL, kStartPosx, kStartPosy);
+    CGPathAddCurveToPoint(curvedPath, NULL,
+                          kStartPosx + jumpHeight, kStartPosy - jumpHeight,
+                          kStartPosx + jumpHeight, kStartPosy + jumpHeight,
+                          kEndPosx, kEndPosy);
+    
+    // パスをCAKeyframeAnimationオブジェクトにセット
+    animation.path = curvedPath;
+    
+    
+    // パスを解放
+    CGPathRelease(curvedPath);
+    
+    NSMutableArray *imageList = [NSMutableArray array];
+    for (int i = 0; i <= 16; i++) {
+        NSString *imagePath = [NSString stringWithFormat:@"minagame1_%03d.png", i];
         UIImage *img = [UIImage imageNamed:imagePath];
         
         UIImage *img_af;
@@ -40,10 +73,22 @@ const float VIEW_WIDTH = 8700;
             [imageList addObject:img];
         }
     }
-    self.imageview.animationImages = imageList;
-    self.imageview.animationDuration = 1;
-    self.imageview.animationRepeatCount = 0;
-    [self.imageview startAnimating];
+    imageview.animationImages = imageList;
+    imageview.animationDuration = 1;
+    imageview.animationRepeatCount = 0;
+    [view.layer addAnimation:animation forKey:nil];
+    [imageview startAnimating];
+    
+    [view addSubview:imageview];
+    [self.view addSubview:view];
+    
+    
+    
+    
+    
+    
+    
+    
     
     UIImage* b_setting_Img = [UIImage imageNamed:@"setting.png"];
     UIImage *a_setting_Img;
