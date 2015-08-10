@@ -143,8 +143,6 @@
 		};
 /* End PBXFrameworksBuildPhase section */
 
-/* Begin PBXGroup section */
-<<<<<<< HEAD
 		0A6900521B77AB4B00A1B650 /* minagame_Left */ = {
 			isa = PBXGroup;
 			children = (
