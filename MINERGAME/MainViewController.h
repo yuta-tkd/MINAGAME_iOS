@@ -13,6 +13,23 @@
     dispatch_queue_t mainQueue; 
     UIScrollView *scrollView;
     UIImageView *contentsView[168];
+    CGMutablePathRef curvedPath1;
+    CGMutablePathRef curvedPath;
+    
+    UIImage *image;
+    UIImageView *imageview;
+    UIView *view;
+    
+    // CAKeyframeAnimationオブジェクトを生成
+    CAKeyframeAnimation *animation;
+
+    UIImage *image1;
+    UIImageView *imageview1;
+    UIView *view1;
+    
+    // CAKeyframeAnimationオブジェクトを生成
+    CAKeyframeAnimation *animation1;
+
 }
 @property (weak, nonatomic) IBOutlet UIImageView *imageview;
 @property (weak, nonatomic) IBOutlet UIButton *btn_Setting;

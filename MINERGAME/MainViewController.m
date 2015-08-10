@@ -11,10 +11,12 @@
 
 const float VIEW_SIZE_WIDTH = 90.7142857;
 @interface MainViewController ()
-
 @end
 
 const float VIEW_WIDTH = 8700;
+int iii = 0;
+int aaa = 0;
+
 
 @implementation MainViewController
 
@@ -22,26 +24,30 @@ const float VIEW_WIDTH = 8700;
     [super viewDidLoad];
 #pragma makrk ###アニメーション###
     
-    UIImage *image = [UIImage imageNamed:@"minagame1_001.png"];
-    UIImageView *imageview = [[UIImageView alloc]initWithImage:image];
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
+    image = [UIImage imageNamed:@"minagame1_001.png"];
+    imageview = [[UIImageView alloc]initWithImage:image];
+    view = [[UIView alloc] initWithFrame:CGRectMake(-500, -500, 80, 80)];
     
     // CAKeyframeAnimationオブジェクトを生成
-    CAKeyframeAnimation *animation;
+ //   CAKeyframeAnimation *animation;
     animation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
     animation.fillMode = kCAFillModeForwards;
     animation.removedOnCompletion = NO;
-    animation.duration = 4.5;
+    animation.duration = 5;
+    animation.repeatCount = HUGE_VALF;
+    animation.beginTime = CACurrentMediaTime() + 2;
+//    CACurrentMediaTime() + 5;
+//    imageview.setFillAfter(true);
     
     
     // 放物線のパスを生成
     CGFloat jumpHeight = 130;
-    CGFloat kStartPosx = 0;
+    CGFloat kStartPosx = -100;
     CGFloat kStartPosy = 500;
     CGFloat kEndPosx = 400;
     CGFloat kEndPosy = 500;
     
-    CGMutablePathRef curvedPath = CGPathCreateMutable();
+    curvedPath = CGPathCreateMutable();
     CGPathMoveToPoint(curvedPath, NULL, kStartPosx, kStartPosy);
     CGPathAddCurveToPoint(curvedPath, NULL,
                           kStartPosx + jumpHeight, kStartPosy - jumpHeight,
@@ -53,41 +59,96 @@ const float VIEW_WIDTH = 8700;
     
     
     // パスを解放
-    CGPathRelease(curvedPath);
+   // CGPathRelease(curvedPath);
     
     NSMutableArray *imageList = [NSMutableArray array];
     for (int i = 0; i <= 16; i++) {
         NSString *imagePath = [NSString stringWithFormat:@"minagame1_%03d.png", i];
         UIImage *img = [UIImage imageNamed:imagePath];
         
-        UIImage *img_af;
-        CGFloat width = 200;
-        CGFloat height = 200;
-        UIGraphicsBeginImageContext(CGSizeMake(width, height));
-        [img drawInRect:CGRectMake(0, 0, width, height)];
-        img_af = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
         if (img != nil)
         {
             [imageList addObject:img];
         }
     }
+    
+    
+    image1 = [UIImage imageNamed:@"minagame1_001.png"];
+    imageview1 = [[UIImageView alloc]initWithImage:image1];
+    view1 = [[UIView alloc] initWithFrame:CGRectMake(-500, -500, 80, 80)];
+    
+    // CAKeyframeAnimationオブジェクトを生成
+    //CAKeyframeAnimation *animation1;
+    animation1 = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+    animation1.fillMode = kCAFillModeForwards;
+    animation1.removedOnCompletion = NO;
+    animation1.duration = 5.0;
+    animation1.repeatCount = HUGE_VALF;
+    animation1.beginTime = CACurrentMediaTime() + 4;
+    
+    // 放物線のパスを生成
+    CGFloat jumpHeight1 = 130;
+    CGFloat kStartPosx1 = 400;
+    CGFloat kStartPosy1 = 500;
+    CGFloat kEndPosx1 = -100;
+    CGFloat kEndPosy1 = 500;
+    
+    curvedPath1 = CGPathCreateMutable();
+    CGPathMoveToPoint(curvedPath1, NULL, kStartPosx1, kStartPosy1);
+    CGPathAddCurveToPoint(curvedPath1, NULL,
+                          kStartPosx1 - jumpHeight1, kStartPosy1 - jumpHeight1,
+                          kStartPosx1 - jumpHeight1, kStartPosy1 + jumpHeight1,
+                          kEndPosx1, kEndPosy1);
+    
+    // パスをCAKeyframeAnimationオブジェクトにセット
+    animation1.path = curvedPath1;
+    
+    
+    // パスを解放
+   // CGPathRelease(curvedPath1);
+    
+    NSMutableArray *imageList1 = [NSMutableArray array];
+    for (int i = 0; i <= 14; i++) {
+        NSString *imagePath1 = [NSString stringWithFormat:@"minagame2_%03d.png", i];
+        UIImage *img1 = [UIImage imageNamed:imagePath1];
+        
+        if (img1 != nil)
+        {
+            [imageList1 addObject:img1];
+        }
+    }
+    
+    CAAnimationGroup *group = [CAAnimationGroup animation];
+    group.animations = [NSArray arrayWithObjects:animation, animation1,nil];
+    
     imageview.animationImages = imageList;
     imageview.animationDuration = 1;
     imageview.animationRepeatCount = 0;
     [view.layer addAnimation:animation forKey:nil];
     [imageview startAnimating];
     
+    imageview1.animationImages = imageList1;
+    imageview1.animationDuration = 1;
+    imageview1.animationRepeatCount = 0;
+    [view1.layer addAnimation:animation1 forKey:nil];
+    [imageview1 startAnimating];
+
     [view addSubview:imageview];
     [self.view addSubview:view];
     
-    
-    
-    
-    
-    
-    
+     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+    [view1 addSubview:imageview1];
+    [self.view addSubview:view1];
+        });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(animation22:) userInfo:nil repeats:YES];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                     [imageview startAnimating];
+
+        });
+        aaa = 1;
+    });
+
     
     
     UIImage* b_setting_Img = [UIImage imageNamed:@"setting.png"];
@@ -239,6 +300,13 @@ const float VIEW_WIDTH = 8700;
     
     [NSTimer scheduledTimerWithTimeInterval:600 target:self selector:@selector(requestSenserDatas:) userInfo:nil repeats:YES];
 }
+-(void)animation22:(NSTimer*)timer{
+    
+    
+    
+}
+
+
 
 #pragma mark ###写真がタッチされたら呼ばれる###
 -(void)touch_btnPhoto:(id)sender{
