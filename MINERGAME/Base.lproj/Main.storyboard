@@ -19,9 +19,10 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sck-Ll-65q">
                                 <rect key="frame" x="0.0" y="20" width="640" height="940"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="shd-Nv-Ikc">
-                                <rect key="frame" x="0.0" y="20" width="640" height="940"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="shd-Nv-Ikc">
+                                <rect key="frame" x="0.0" y="20" width="611" height="580"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mHB-bl-Xhd">
                                 <rect key="frame" x="534" y="20" width="30" height="34"/>
@@ -46,6 +47,7 @@
                     <connections>
                         <outlet property="btn_Setting" destination="mHB-bl-Xhd" id="W0q-bO-XXN"/>
                         <outlet property="imageview" destination="shd-Nv-Ikc" id="Axb-8t-boV"/>
+                        <outlet property="umi_View" destination="sck-Ll-65q" id="mcm-7X-dWm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

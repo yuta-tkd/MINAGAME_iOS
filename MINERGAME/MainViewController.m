@@ -52,7 +52,6 @@ const float VIEW_WIDTH = 8700;
     animation.path = curvedPath;
     
     
-    // パスを解放
     CGPathRelease(curvedPath);
     
     NSMutableArray *imageList = [NSMutableArray array];
@@ -152,7 +151,7 @@ const float VIEW_WIDTH = 8700;
         contentsView[i].frame = CGRectMake(60*i, 100, 46.875, 300);
         contentsView[i].tag = i;
         contentsView[i].userInteractionEnabled = YES;
-        //contentsView[i].backgroundColor = [UIColor redColor];
+        contentsView[i].backgroundColor = [UIColor redColor];
         [scrollView addSubview:contentsView[i]];
     }
     //int user_temp = [jsonArray[@"temperatures"][0][@"Temperature"][@"temperature"] intValue];
@@ -206,22 +205,20 @@ const float VIEW_WIDTH = 8700;
                 if (change_Hour < 0) {
                     change_Hour +=24;
                 }
-                
                 //btn_Photo
                 UIButton *btn_Photo  = [UIButton buttonWithType:UIButtonTypeCustom];
                 [btn_Photo setImage:[UIImage imageNamed:@"photo.png"] forState:UIControlStateNormal];
                 [btn_Photo addTarget:self
                         action:@selector(touch_btnPhoto:) forControlEvents:UIControlEventTouchUpInside];
-                
                 //btn_Voice
                 UIButton *btn_Voice  = [UIButton buttonWithType:UIButtonTypeCustom];
                 [btn_Voice setImage:[UIImage imageNamed:@"sound.png"] forState:UIControlStateNormal];
                 [btn_Voice addTarget:self action:@selector(touch_btnVoice:) forControlEvents:UIControlEventTouchUpInside];
-                
                 //btn_Touch
                 UIButton *btn_Touch  = [UIButton buttonWithType:UIButtonTypeCustom];
-                btn_Touch.enabled = false;
                 [btn_Touch setImage:[UIImage imageNamed:@"touch.png"] forState:UIControlStateNormal];
+                btn_Touch.enabled = NO;
+                btn_Touch.adjustsImageWhenDisabled = NO;
                 [btn_Touch addTarget:self action:@selector(touch_btnTouch:) forControlEvents:UIControlEventTouchUpInside];
                 
                 if (i%2==0) {
@@ -234,6 +231,7 @@ const float VIEW_WIDTH = 8700;
                     btn_Photo.frame = CGRectMake(-5, 225, 48, 48);
                     btn_Voice.frame = CGRectMake(-5, 155, 48, 48);
                 }
+                contentsView[i].image = [UIImage imageNamed:@"sen.png"];
                 [contentsView[i] addSubview:time_Label];
                 [contentsView[i] addSubview:temp_Label];
                 [contentsView[i] addSubview:btn_Touch];
@@ -265,23 +263,21 @@ const float VIEW_WIDTH = 8700;
     imageView.image = img;
     // UIView
     UIScreen* screen = [UIScreen mainScreen];
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0,0.0,screen.bounds.size.width,screen.bounds.size.height)];
-    view.backgroundColor =  [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.4];
+    UIView *photo_View = [[UIView alloc] initWithFrame:CGRectMake(0.0,0.0,screen.bounds.size.width,screen.bounds.size.height)];
+    photo_View.backgroundColor =  [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.4];
     //UITapGesture
-    UITapGestureRecognizer *tapGesture =
-    [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(photo_view_Tapped:)];
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(photo_view_Tapped:)];
 
-    [view addGestureRecognizer:tapGesture];
-    [view addSubview:imageView];
-    [self.view.window addSubview:view];
+    [photo_View addGestureRecognizer:tapGesture];
+    [photo_View addSubview:imageView];
+    [self.view.window addSubview:photo_View];
     
 }
 
 - (void)photo_view_Tapped:(UITapGestureRecognizer *)sender
 {
-    NSLog(@"タップされました．");
-    UIView *view = sender.view;
-    [view removeFromSuperview];
+    UIView *del_View = (UIView*)sender.view;
+    [del_View removeFromSuperview];
 }
 
 #pragma mark ###音声がタッチされたら呼ばれる###
@@ -311,14 +307,13 @@ const float VIEW_WIDTH = 8700;
     NSURLRequest  *request = [[NSURLRequest alloc] initWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request queue:nil completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
 #pragma mark ###10分更新###
-        for (int i = 144; i > 0; --i) {xx
+        for (int i = 144; i > 0; --i) {
             [contentsView[i] removeFromSuperview];
             contentsView[i] = [[UIImageView alloc] init];
             contentsView[i].frame = CGRectMake(60*i, 100, 46.875, 300);
             contentsView[i].tag = i;
             contentsView[i].userInteractionEnabled = YES;
             [scrollView addSubview:contentsView[i]];
-
             if (1 >= 0) {
                 
                 UILabel *time_Label = [[UILabel alloc] init];
@@ -342,6 +337,8 @@ const float VIEW_WIDTH = 8700;
                 [btn_Voice setImage:[UIImage imageNamed:@"sound.png"] forState:UIControlStateNormal];
                 UIButton *btn_Touch  = [UIButton buttonWithType:UIButtonTypeCustom];
                 btn_Touch.frame = CGRectMake(-5, 190, 40, 40);
+                btn_Touch.enabled = NO;
+                btn_Touch.adjustsImageWhenDisabled = NO;
                 [btn_Touch setImage:[UIImage imageNamed:@"touch.png"] forState:UIControlStateNormal];
                 [contentsView[i] addSubview:time_Label];
                 [contentsView[i] addSubview:temp_Label];

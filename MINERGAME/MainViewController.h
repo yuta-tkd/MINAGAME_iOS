@@ -13,8 +13,11 @@
     dispatch_queue_t mainQueue; 
     UIScrollView *scrollView;
     UIImageView *contentsView[168];
+    UIImageView *imageview;
+    UIView *view;
 }
 @property (weak, nonatomic) IBOutlet UIImageView *imageview;
+@property (weak, nonatomic) IBOutlet UIImageView *umi_View;
 @property (weak, nonatomic) IBOutlet UIButton *btn_Setting;
 - (IBAction)touch_btnSetting:(id)sender;
 
