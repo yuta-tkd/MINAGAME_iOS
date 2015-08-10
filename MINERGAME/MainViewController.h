@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import <AudioToolbox/AudioToolbox.h>
 
-@interface MainViewController : UIViewController<UIScrollViewDelegate>{
+@interface MainViewController : UIViewController<UIScrollViewDelegate,AVAudioPlayerDelegate,UIWebViewDelegate>{
     dispatch_queue_t mainQueue; 
     UIScrollView *scrollView;
     UIImageView *contentsView[168];
@@ -18,5 +19,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *btn_Setting;
 - (IBAction)touch_btnSetting:(id)sender;
 
+@property(nonatomic) AVAudioPlayer *audioPlayer;
+@property (nonatomic,strong) AVPlayer *audioStremarPlayer;
+
 @end
+
+
 
