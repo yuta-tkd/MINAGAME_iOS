@@ -24,7 +24,7 @@
 -(void)viewDidAppear:(BOOL)animated{
 
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    if ([ud valueForKey:@"U_ID"] !=NULL || ![[ud valueForKey:@"U_ID"]  isEqual: @""] ) {
+    if ([ud valueForKey:@"U_ID"] !=NULL && ![[ud valueForKey:@"U_ID"]  isEqual: @""] ) {
         MainViewController *mainViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"main"];
         [self presentViewController:mainViewController animated:NO completion:nil];
     }

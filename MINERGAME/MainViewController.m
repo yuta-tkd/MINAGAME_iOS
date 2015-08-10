@@ -137,7 +137,6 @@ const float VIEW_WIDTH = 8700;
     if (change_Hour < 0) {
         change_Hour +=24;
     }
-
     
     NSLog(@"START_HOUR:[%ld]",(long)START_HOUR);
     NSLog(@"change_Hour:[%ld]",(long)change_Hour);
@@ -169,16 +168,24 @@ const float VIEW_WIDTH = 8700;
 //                NSLog(@"change_time_2:[%@]",change_Time);
 //                NSLog(@"change_hour:[%ld]",(long)change_Hour);
                 UILabel *time_Label = [[UILabel alloc] init];
+                UILabel *temp_Label = [[UILabel alloc] init];
                 
                 if (START_HOUR == change_Hour) {
                     NSLog(@"START_HOUR_2:[%ld]",(long)START_HOUR);
-                    time_Label.frame = CGRectMake(0, 10, 65, 18);
+                    time_Label.frame = CGRectMake(5, 10, 65, 18);
+                    time_Label.textAlignment = NSTextAlignmentCenter;
                     time_Label.textColor = [UIColor blackColor];
-                    time_Label.font = [UIFont fontWithName:@"RuikaKyohkan-05" size:13];
+                    time_Label.font = [UIFont fontWithName:@"RuikaKyohkan-05" size:18];
                     time_Label.textAlignment = NSTextAlignmentLeft;
-                    time_Label.text = [NSString stringWithFormat:@"%d", START_HOUR];
+                    time_Label.text = [NSString stringWithFormat:@"%ld", START_HOUR];
                     NSLog(@"START_TIME_2:[%@]",START_TIME);
                     NSLog(@"change_time_2:[%@]",change_Time);
+                    
+                    temp_Label.frame = CGRectMake(5, 25, 45, 18);
+                    temp_Label.textAlignment = NSTextAlignmentCenter;
+                    temp_Label.font = [UIFont fontWithName:@"RuikaKyohkan-05" size:13];
+                    temp_Label.textAlignment = NSTextAlignmentLeft;
+                    temp_Label.text = [NSString stringWithFormat:@"%d℃",i];
                     
                     START_TIME = [START_TIME dateByAddingTimeInterval:-60*60];
                     NSCalendar* cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
@@ -200,33 +207,33 @@ const float VIEW_WIDTH = 8700;
                     change_Hour +=24;
                 }
                 
-                
-                //NSLog(@"比較:%@,%@",first_Date,second_Date);
-                UILabel *temp_Label = [[UILabel alloc] init];
-                temp_Label.frame = CGRectMake(0, 25, 35, 18);
-                temp_Label.font = [UIFont fontWithName:@"RuikaKyohkan-05" size:13];
-                temp_Label.textAlignment = NSTextAlignmentLeft;
-                temp_Label.text = [NSString stringWithFormat:@"%d",i];
-                
                 //btn_Photo
                 UIButton *btn_Photo  = [UIButton buttonWithType:UIButtonTypeCustom];
-                btn_Photo.frame = CGRectMake(-5, 50, 40, 40);
                 [btn_Photo setImage:[UIImage imageNamed:@"photo.png"] forState:UIControlStateNormal];
                 [btn_Photo addTarget:self
                         action:@selector(touch_btnPhoto:) forControlEvents:UIControlEventTouchUpInside];
                 
                 //btn_Voice
                 UIButton *btn_Voice  = [UIButton buttonWithType:UIButtonTypeCustom];
-                btn_Voice.frame = CGRectMake(-5, 120, 40, 40);
                 [btn_Voice setImage:[UIImage imageNamed:@"sound.png"] forState:UIControlStateNormal];
                 [btn_Voice addTarget:self action:@selector(touch_btnVoice:) forControlEvents:UIControlEventTouchUpInside];
                 
                 //btn_Touch
                 UIButton *btn_Touch  = [UIButton buttonWithType:UIButtonTypeCustom];
-                btn_Touch.frame = CGRectMake(-5, 190, 40, 40);
+                btn_Touch.enabled = false;
                 [btn_Touch setImage:[UIImage imageNamed:@"touch.png"] forState:UIControlStateNormal];
                 [btn_Touch addTarget:self action:@selector(touch_btnTouch:) forControlEvents:UIControlEventTouchUpInside];
                 
+                if (i%2==0) {
+                    btn_Touch.frame = CGRectMake(-5, 50, 48, 48);
+                    btn_Voice.frame = CGRectMake(-5, 120, 48, 48);
+                    btn_Photo.frame = CGRectMake(-5, 190, 48, 48);
+                }
+                else{
+                    btn_Touch.frame = CGRectMake(-5, 85, 48, 48);
+                    btn_Photo.frame = CGRectMake(-5, 225, 48, 48);
+                    btn_Voice.frame = CGRectMake(-5, 155, 48, 48);
+                }
                 [contentsView[i] addSubview:time_Label];
                 [contentsView[i] addSubview:temp_Label];
                 [contentsView[i] addSubview:btn_Touch];
@@ -327,7 +334,7 @@ const float VIEW_WIDTH = 8700;
     NSURLRequest  *request = [[NSURLRequest alloc] initWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request queue:nil completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
 #pragma mark ###10分更新###
-        for (int i = 0; i < 144; i++) {
+        for (int i = 144; i > 0; --i) {xx
             [contentsView[i] removeFromSuperview];
             contentsView[i] = [[UIImageView alloc] init];
             contentsView[i].frame = CGRectMake(60*i, 100, 46.875, 300);
