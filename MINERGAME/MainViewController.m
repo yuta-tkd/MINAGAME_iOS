@@ -70,24 +70,32 @@ const float VIEW_WIDTH = 8700;
     [self.view addSubview:scrollView];
     scrollView.contentOffset = CGPointMake(8286,0);
     //NSLog(@"オフセット:x:%f,y:%f",scrollView.contentOffset.x,scrollView.contentOffset.y);
+    __block NSDate* START_TIME = [NSDate date];
+    __block NSDate* change_Time = [NSDate date];
+    START_TIME = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
+    change_Time = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
     
+    NSLog(@"START_HOUR:[%@]",START_TIME);
+    NSLog(@"change_Time:[%@]",change_Time);
     NSDateFormatter *formater = [[NSDateFormatter alloc] init];
     [formater setDateFormat:@"YYYY-MM-dd HH:mm:ss"];//DB用
-    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-    [fmt setDateFormat:@"HH:mm"];//表示用
-    NSDateFormatter *hour_Fmt = [[NSDateFormatter alloc] init];
-    [hour_Fmt setDateFormat:@"YYYY-MM-dd HH"];//DB用
+
+    NSCalendar* cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSCalendarUnit unitFlags =  NSCalendarUnitDay| NSCalendarUnitHour | NSCalendarUnitMinute;
+    NSDateComponents *dateComponents_Hour = [cal components:unitFlags fromDate:START_TIME];
+    __block NSInteger START_HOUR = dateComponents_Hour.hour -9;
+    __block NSInteger change_Hour = dateComponents_Hour.hour -9;
+    if (START_HOUR < 0) {
+        START_HOUR +=24;
+    }
+    if (change_Hour < 0) {
+        change_Hour +=24;
+    }
+
     
-    NSDate *nowTime = [NSDate date];//現在時刻
-    NSString* st = [hour_Fmt stringFromDate:nowTime];
-    NSString *dbTime_String = [formater stringFromDate:nowTime];//DB用時刻文字
-    NSDate* first_Date = [hour_Fmt dateFromString:st];//前
-//    NSCalendar* cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-//    NSCalendarUnit unitFlags =  NSCalendarUnitDay| NSCalendarUnitHour | NSCalendarUnitMinute;
-//    NSDateComponents *dateComponents_Hour = [cal components:unitFlags fromDate:nowTime];
-//    NSInteger day_Axis = dateComponents_Hour.day;//時間
-//    NSInteger hour_Axis = dateComponents_Hour.hour;//時間
-//    NSDate* comp_Hour = [hour_Fmt dateFromString:[NSString stringWithFormat:@"%02ld %02ld",(long)day_Axis,(long)hour_Axis]];
+    NSLog(@"START_HOUR:[%ld]",(long)START_HOUR);
+    NSLog(@"change_Hour:[%ld]",(long)change_Hour);
+    NSString* dbTime_String = [formater stringFromDate:change_Time];
     
     NSURL *url = [NSURL URLWithString:@"http://ec2-52-69-253-248.ap-northeast-1.compute.amazonaws.com/api/allSensor"];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
@@ -108,50 +116,46 @@ const float VIEW_WIDTH = 8700;
         NSError* error=nil;
         NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         NSLog(@"%@",jsonArray);
-        int daysToAdd = -1;
-        
         
         for (int i = 144; i > 0; --i) {
             if (true) {
-                NSDate *before_Date = [nowTime dateByAddingTimeInterval:60*10*daysToAdd];
                 
-                daysToAdd--;
+//                NSLog(@"change_time_2:[%@]",change_Time);
+//                NSLog(@"change_hour:[%ld]",(long)change_Hour);
+                UILabel *time_Label = [[UILabel alloc] init];
+                
+                if (START_HOUR == change_Hour) {
+                    NSLog(@"START_HOUR_2:[%ld]",(long)START_HOUR);
+                    time_Label.frame = CGRectMake(0, 10, 65, 18);
+                    time_Label.textColor = [UIColor blackColor];
+                    time_Label.font = [UIFont fontWithName:@"RuikaKyohkan-05" size:13];
+                    time_Label.textAlignment = NSTextAlignmentLeft;
+                    time_Label.text = [NSString stringWithFormat:@"%d", START_HOUR];
+                    NSLog(@"START_TIME_2:[%@]",START_TIME);
+                    NSLog(@"change_time_2:[%@]",change_Time);
+                    
+                    START_TIME = [START_TIME dateByAddingTimeInterval:-60*60];
+                    NSCalendar* cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+                    NSCalendarUnit unitFlags =  NSCalendarUnitDay| NSCalendarUnitHour | NSCalendarUnitMinute;
+                    NSDateComponents *dateComponents = [cal components:unitFlags fromDate:START_TIME];
+                    START_HOUR = dateComponents.hour -9;
+                    if (START_HOUR < 0) {
+                        START_HOUR +=24;
+                    }
+                    
+                }
+                change_Time = [change_Time dateByAddingTimeInterval:-60*10];
                 
                 NSCalendar* cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-                NSCalendarUnit unitFlags =  NSCalendarUnitDay|NSCalendarUnitHour | NSCalendarUnitMinute;
-                
-                NSDateComponents *dateComponents = [cal components:unitFlags fromDate:before_Date];
-                NSInteger hour_Before = dateComponents.hour;//修正時間
-                NSString* mod_Time_String = [NSString stringWithFormat:@"%02ld:00",hour_Before];
-                
-                NSString* before_St = [hour_Fmt stringFromDate:before_Date];//前
-                
-                NSDate* second_Date = [hour_Fmt dateFromString:before_St];//前
-                
-        
-                UILabel *time_Label = [[UILabel alloc] init];
-                time_Label.frame = CGRectMake(0, 10, 65, 18);
-                time_Label.textColor = [UIColor blackColor];
-                time_Label.font = [UIFont fontWithName:@"RuikaKyohkan-05" size:13];
-                time_Label.textAlignment = NSTextAlignmentLeft;
-                NSLog(@"比較:%@,%@",first_Date,second_Date);
-                
-                NSComparisonResult result = [first_Date compare:second_Date];
-                switch(result) {
-                    case NSOrderedSame: // 一致したとき
-                        break;
-                        
-                    case NSOrderedAscending: // date1が小さいとき
-                        break;
-                        
-                    case NSOrderedDescending: {// date1が大きいとき
-                        time_Label.text = mod_Time_String;
-                        NSString* next_St = [hour_Fmt stringFromDate:before_Date];
-//                        first_Date = [hour_Fmt dateFromString:next_St];//最初の比較用
-                        break;
-                    }
+                NSCalendarUnit unitFlags =  NSCalendarUnitDay| NSCalendarUnitHour | NSCalendarUnitMinute;
+                NSDateComponents *dateComponents = [cal components:unitFlags fromDate:change_Time];
+                change_Hour = dateComponents.hour -9;
+                if (change_Hour < 0) {
+                    change_Hour +=24;
                 }
                 
+                
+                //NSLog(@"比較:%@,%@",first_Date,second_Date);
                 UILabel *temp_Label = [[UILabel alloc] init];
                 temp_Label.frame = CGRectMake(0, 25, 35, 18);
                 temp_Label.font = [UIFont fontWithName:@"RuikaKyohkan-05" size:13];
