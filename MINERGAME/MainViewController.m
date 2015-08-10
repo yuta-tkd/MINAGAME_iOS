@@ -266,7 +266,7 @@ const float VIEW_WIDTH = 8700;
     NSURLRequest  *request = [[NSURLRequest alloc] initWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request queue:nil completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
 #pragma mark ###10分更新###
-        for (int i = 0; i < 144; i++) {
+        for (int i = 144; i > 0; --i) {xx
             [contentsView[i] removeFromSuperview];
             contentsView[i] = [[UIImageView alloc] init];
             contentsView[i].frame = CGRectMake(60*i, 100, 46.875, 300);
