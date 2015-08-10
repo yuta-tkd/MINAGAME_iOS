@@ -289,12 +289,35 @@ const float VIEW_WIDTH = 8700;
     //仮URL
     NSString* path = @"http://ec2-52-69-253-248.ap-northeast-1.compute.amazonaws.com/edison/sounds/e0a78816c2f28fccad285db710263999.wav";
     NSURL* sound_url = [NSURL URLWithString:path];
-    NSData* data = [NSData dataWithContentsOfURL:sound_url];
     
-    AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc] initWithData:data error:nil];
-    audioPlayer.numberOfLoops = -1;
+    // stremar player
+
+    if(self.audioStremarPlayer){
+        [self.audioStremarPlayer removeObserver:self forKeyPath:@"status"];
+    }
+    self.audioStremarPlayer = [[AVPlayer alloc]initWithURL:sound_url];
+    [self.audioStremarPlayer addObserver:self forKeyPath:@"status" options:0 context:nil];
     
-    [audioPlayer play];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    
+    if (object == self.audioStremarPlayer && [keyPath isEqualToString:@"status"]) {
+        if (self.audioStremarPlayer.status == AVPlayerStatusFailed)
+        {
+            NSLog(@"AVPlayer Failed");
+        }
+        else if (self.audioStremarPlayer.status == AVPlayerStatusReadyToPlay)
+        {
+            [self.audioStremarPlayer play];
+        }
+        else if (self.audioStremarPlayer.status == AVPlayerItemStatusUnknown)
+        {
+            NSLog(@"AVPlayer Unknown");
+            
+        }
+    }
 }
 
 #pragma mark ###触るがタッチされたら呼ばれる###
