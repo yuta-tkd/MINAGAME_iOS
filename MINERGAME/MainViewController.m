@@ -14,7 +14,7 @@ const float VIEW_SIZE_WIDTH = 90.7142857;
 
 @end
 
-const float VIEW_WIDTH = 8625;
+const float VIEW_WIDTH = 8700;
 
 @implementation MainViewController
 
@@ -25,6 +25,15 @@ const float VIEW_WIDTH = 8625;
     for (int i = 0; i <= 50; i++) {
         NSString *imagePath = [NSString stringWithFormat:@"minagame_%03d.png", i];
         UIImage *img = [UIImage imageNamed:imagePath];
+        
+        UIImage *img_af;
+        CGFloat width = 200;
+        CGFloat height = 200;
+        UIGraphicsBeginImageContext(CGSizeMake(width, height));
+        [img drawInRect:CGRectMake(0, 0, width, height)];
+        img_af = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
         if (img != nil)
         {
             [imageList addObject:img];
@@ -59,25 +68,33 @@ const float VIEW_WIDTH = 8625;
     scrollView.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
     [scrollView setContentSize:CGSizeMake(VIEW_WIDTH, self.view.frame.size.height-100)];
     [self.view addSubview:scrollView];
-    
+    scrollView.contentOffset = CGPointMake(8286,0);
+    //NSLog(@"オフセット:x:%f,y:%f",scrollView.contentOffset.x,scrollView.contentOffset.y);
     
     NSDateFormatter *formater = [[NSDateFormatter alloc] init];
     [formater setDateFormat:@"YYYY-MM-dd HH:mm:ss"];//DB用
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
     [fmt setDateFormat:@"HH:mm"];//表示用
     NSDateFormatter *hour_Fmt = [[NSDateFormatter alloc] init];
-    [fmt setDateFormat:@"dd HH"];//表示用
+    [hour_Fmt setDateFormat:@"YYYY-MM-dd HH"];//DB用
     
     NSDate *nowTime = [NSDate date];//現在時刻
-    
+    NSString* st = [hour_Fmt stringFromDate:nowTime];
     NSString *dbTime_String = [formater stringFromDate:nowTime];//DB用時刻文字
+    NSDate* first_Date = [hour_Fmt dateFromString:st];//前
+//    NSCalendar* cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+//    NSCalendarUnit unitFlags =  NSCalendarUnitDay| NSCalendarUnitHour | NSCalendarUnitMinute;
+//    NSDateComponents *dateComponents_Hour = [cal components:unitFlags fromDate:nowTime];
+//    NSInteger day_Axis = dateComponents_Hour.day;//時間
+//    NSInteger hour_Axis = dateComponents_Hour.hour;//時間
+//    NSDate* comp_Hour = [hour_Fmt dateFromString:[NSString stringWithFormat:@"%02ld %02ld",(long)day_Axis,(long)hour_Axis]];
     
     NSURL *url = [NSURL URLWithString:@"http://ec2-52-69-253-248.ap-northeast-1.compute.amazonaws.com/api/allSensor"];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     request.HTTPMethod = @"POST";
     NSString *body = [NSString stringWithFormat:@"edisonName=%@&startTime=%@&duration=%d",[NSString stringWithFormat:@"kame03"],dbTime_String,60];
     request.HTTPBody = [body dataUsingEncoding:NSUTF8StringEncoding];
-    for (int i = 0; i < 144; i++) {
+    for (int i = 144; i > 0; --i) {
         contentsView[i] = [[UIImageView alloc] init];
         contentsView[i].frame = CGRectMake(60*i, 100, 46.875, 300);
         contentsView[i].tag = i;
@@ -91,14 +108,9 @@ const float VIEW_WIDTH = 8625;
         NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         NSLog(@"%@",jsonArray);
         int daysToAdd = -1;
-        NSCalendar* cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-        NSCalendarUnit unitFlags =  NSCalendarUnitDay| NSCalendarUnitHour | NSCalendarUnitMinute;
-        NSDateComponents *dateComponents_Hour = [cal components:unitFlags fromDate:nowTime];
-        NSInteger day_Axis = dateComponents_Hour.day;//時間
-        NSInteger hour_Axis = dateComponents_Hour.hour;//時間
-        NSDate* comp_Hour = [hour_Fmt dateFromString:[NSString stringWithFormat:@"%02ld %02ld",(long)day_Axis,(long)hour_Axis]];
         
-        for (int i = 1; i < 145; i++) {
+        
+        for (int i = 144; i > 0; --i) {
             if (true) {
                 NSDate *before_Date = [nowTime dateByAddingTimeInterval:60*10*daysToAdd];
                 
@@ -108,47 +120,35 @@ const float VIEW_WIDTH = 8625;
                 NSCalendarUnit unitFlags =  NSCalendarUnitDay|NSCalendarUnitHour | NSCalendarUnitMinute;
                 
                 NSDateComponents *dateComponents = [cal components:unitFlags fromDate:before_Date];
-                NSInteger day_Before = dateComponents.day;
                 NSInteger hour_Before = dateComponents.hour;//修正時間
-                NSInteger minute_Before = dateComponents.minute;//修正分
+                NSString* mod_Time_String = [NSString stringWithFormat:@"%02ld:00",hour_Before];
                 
-                NSDate* comp_Hour_Before = [hour_Fmt dateFromString:[NSString stringWithFormat:@"%02ld %02ld",(long)day_Before,(long)hour_Before]];
-                NSComparisonResult result = [comp_Hour compare:comp_Hour_Before];
-                switch(result) {
-                    case NSOrderedSame: // 一致したとき
-                        NSLog(@"同じ日付です");
-                        break;
-                        
-                    case NSOrderedAscending: // date1が小さいとき
-                        NSLog(@"異なる日付です（date1のが小）");
-                        break;
-                        
-                    case NSOrderedDescending: // date1が大きいとき
-                        NSLog(@"異なる日付です（date1のが大）");
-                        break;
-                }
-                NSLog(@"%ld分",(long)minute_Before);
+                NSString* before_St = [hour_Fmt stringFromDate:before_Date];//前
                 
-                if (hour_Axis > hour_Before) {
-                    
-                }
-                hour_Axis =hour_Before;
-//                if (minute_Before>10) {
-//                    minute_Before = (minute_Before/10)*10;
-//                }
-//                else{
-//                    minute_Before=0;
-//                }
-                NSString* mod_Time_String = [NSString stringWithFormat:@"%02ld:%02ld",hour_Before,minute_Before];
+                NSDate* second_Date = [hour_Fmt dateFromString:before_St];//前
                 
+        
                 UILabel *time_Label = [[UILabel alloc] init];
                 time_Label.frame = CGRectMake(0, 10, 65, 18);
                 time_Label.textColor = [UIColor blackColor];
                 time_Label.font = [UIFont fontWithName:@"RuikaKyohkan-05" size:13];
                 time_Label.textAlignment = NSTextAlignmentLeft;
+                NSLog(@"比較:%@,%@",first_Date,second_Date);
                 
-                if (minute_Before==00) {
-                    time_Label.text = mod_Time_String;
+                NSComparisonResult result = [first_Date compare:second_Date];
+                switch(result) {
+                    case NSOrderedSame: // 一致したとき
+                        break;
+                        
+                    case NSOrderedAscending: // date1が小さいとき
+                        break;
+                        
+                    case NSOrderedDescending: {// date1が大きいとき
+                        time_Label.text = mod_Time_String;
+                        NSString* next_St = [hour_Fmt stringFromDate:before_Date];
+//                        first_Date = [hour_Fmt dateFromString:next_St];//最初の比較用
+                        break;
+                    }
                 }
                 
                 UILabel *temp_Label = [[UILabel alloc] init];
@@ -250,6 +250,7 @@ const float VIEW_WIDTH = 8625;
 
 - (void)scrollViewDidScroll:(UIScrollView *)sender
 {
+//    NSLog(@"オフセット:x:%f,y:%f",scrollView.contentOffset.x,scrollView.contentOffset.y);
 }
 - (IBAction)touch_btnSetting:(id)sender {
     UIAlertView *alert = [[UIAlertView alloc] init];
