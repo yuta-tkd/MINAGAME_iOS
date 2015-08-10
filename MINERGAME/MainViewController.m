@@ -98,6 +98,7 @@ const float VIEW_WIDTH = 8700;
         contentsView[i] = [[UIImageView alloc] init];
         contentsView[i].frame = CGRectMake(60*i, 100, 46.875, 300);
         contentsView[i].tag = i;
+        contentsView[i].userInteractionEnabled = YES;
         //contentsView[i].backgroundColor = [UIColor redColor];
         [scrollView addSubview:contentsView[i]];
     }
@@ -156,18 +157,26 @@ const float VIEW_WIDTH = 8700;
                 temp_Label.font = [UIFont fontWithName:@"RuikaKyohkan-05" size:13];
                 temp_Label.textAlignment = NSTextAlignmentLeft;
                 temp_Label.text = [NSString stringWithFormat:@"%d",i];
+                
+                //btn_Photo
                 UIButton *btn_Photo  = [UIButton buttonWithType:UIButtonTypeCustom];
                 btn_Photo.frame = CGRectMake(-5, 50, 40, 40);
                 [btn_Photo setImage:[UIImage imageNamed:@"photo.png"] forState:UIControlStateNormal];
-                [btn_Photo addTarget:self action:@selector(touch_btnPhoto:) forControlEvents:UIControlEventTouchUpInside];
+                [btn_Photo addTarget:self
+                        action:@selector(touch_btnPhoto:) forControlEvents:UIControlEventTouchUpInside];
+                
+                //btn_Voice
                 UIButton *btn_Voice  = [UIButton buttonWithType:UIButtonTypeCustom];
                 btn_Voice.frame = CGRectMake(-5, 120, 40, 40);
                 [btn_Voice setImage:[UIImage imageNamed:@"sound.png"] forState:UIControlStateNormal];
                 [btn_Voice addTarget:self action:@selector(touch_btnVoice:) forControlEvents:UIControlEventTouchUpInside];
+                
+                //btn_Touch
                 UIButton *btn_Touch  = [UIButton buttonWithType:UIButtonTypeCustom];
                 btn_Touch.frame = CGRectMake(-5, 190, 40, 40);
                 [btn_Touch setImage:[UIImage imageNamed:@"touch.png"] forState:UIControlStateNormal];
                 [btn_Touch addTarget:self action:@selector(touch_btnTouch:) forControlEvents:UIControlEventTouchUpInside];
+                
                 [contentsView[i] addSubview:time_Label];
                 [contentsView[i] addSubview:temp_Label];
                 [contentsView[i] addSubview:btn_Touch];
@@ -182,17 +191,62 @@ const float VIEW_WIDTH = 8700;
 }
 
 #pragma mark ###写真がタッチされたら呼ばれる###
--(void)touch_btnPhoto:(NSURL*)url{
+-(void)touch_btnPhoto:(id)sender{
+    NSLog(@"touch:photo");
+    //sender経由でボタンを取得
+    //UIButton *button = (UIButton *)sender;
 
+    //仮URL
+    NSString* path = @"http://ec2-52-69-253-248.ap-northeast-1.compute.amazonaws.com/edison/photos/e5ccc0424016aa86ffe89829400f6f9d.jpg";
+    NSURL* photo_url = [NSURL URLWithString:path];
+    NSData* data = [NSData dataWithContentsOfURL:photo_url];
+    UIImage* img = [[UIImage alloc] initWithData:data];
+    // UIImageViewの初期化
+    CGRect rect = CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height/2, 320, 240);
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:rect];
+    imageView.layer.anchorPoint = CGPointMake(1.0, 1.0);
+    imageView.image = img;
+    // UIView
+    UIScreen* screen = [UIScreen mainScreen];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0,0.0,screen.bounds.size.width,screen.bounds.size.height)];
+    view.backgroundColor =  [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.4];
+    //UITapGesture
+    UITapGestureRecognizer *tapGesture =
+    [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(photo_view_Tapped:)];
+
+    [view addGestureRecognizer:tapGesture];
+    [view addSubview:imageView];
+    [self.view.window addSubview:view];
+    
+}
+
+- (void)photo_view_Tapped:(UITapGestureRecognizer *)sender
+{
+    NSLog(@"タップされました．");
+    UIView *view = sender.view;
+    [view removeFromSuperview];
 }
 
 #pragma mark ###音声がタッチされたら呼ばれる###
 -(void)touch_btnVoice:(NSURL*)url{
-
+    NSLog(@"touch:voice");
+    //sender経由でボタンを取得
+    //UIButton *button = (UIButton *)sender;
+    
+    //仮URL
+    NSString* path = @"http://ec2-52-69-253-248.ap-northeast-1.compute.amazonaws.com/edison/sounds/e0a78816c2f28fccad285db710263999.wav";
+    NSURL* sound_url = [NSURL URLWithString:path];
+    NSData* data = [NSData dataWithContentsOfURL:sound_url];
+    
+    AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc] initWithData:data error:nil];
+    audioPlayer.numberOfLoops = -1;
+    
+    [audioPlayer play];
 }
+
 #pragma mark ###触るがタッチされたら呼ばれる###
 -(void)touch_btnTouch:(BOOL)isTouch{
-
+    NSLog(@"touch:touch");
 }
 
 -(void)requestSenserDatas:(NSTimer*)timer{
@@ -205,6 +259,7 @@ const float VIEW_WIDTH = 8700;
             contentsView[i] = [[UIImageView alloc] init];
             contentsView[i].frame = CGRectMake(60*i, 100, 46.875, 300);
             contentsView[i].tag = i;
+            contentsView[i].userInteractionEnabled = YES;
             [scrollView addSubview:contentsView[i]];
 
             if (1 >= 0) {

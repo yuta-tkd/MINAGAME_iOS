@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>FC2E6B7A-2C19-4A31-B275-A0229100A684</string>
+	<key>IDESourceControlProjectName</key>
+	<string>MINERGAME</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>CE1FBA56B052F8B34361D9E6C947BBF9115023E0</key>
+		<string>github.com:yuta-tkd/MINAGAME_iOS.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>MINERGAME.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>CE1FBA56B052F8B34361D9E6C947BBF9115023E0</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:yuta-tkd/MINAGAME_iOS.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>CE1FBA56B052F8B34361D9E6C947BBF9115023E0</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>CE1FBA56B052F8B34361D9E6C947BBF9115023E0</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MINAGAME_iOS</string>
+		</dict>
+	</array>
+</dict>
+</plist>

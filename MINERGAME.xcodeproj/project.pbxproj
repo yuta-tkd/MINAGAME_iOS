@@ -1080,8 +1080,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A69FDE81B77953000A1B650 /* AudioToolbox.framework in Frameworks */,
 				0A69FDE61B77952400A1B650 /* AVFoundation.framework in Frameworks */,
+				0A69FDE81B77953000A1B650 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

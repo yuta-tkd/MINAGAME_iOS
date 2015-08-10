@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface MainViewController : UIViewController<UIScrollViewDelegate>{
     dispatch_queue_t mainQueue; 
@@ -17,5 +18,5 @@
 @property (weak, nonatomic) IBOutlet UIButton *btn_Setting;
 - (IBAction)touch_btnSetting:(id)sender;
 
-
 @end
+
