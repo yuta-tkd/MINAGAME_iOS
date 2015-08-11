@@ -31,8 +31,8 @@
     // CAKeyframeAnimationオブジェクトを生成
     CAKeyframeAnimation *animation1;
 
-    UIImageView *imageview;
-    UIView *view;
+    //UIImageView *imageview;
+    //UIView *view;
 }
 @property (weak, nonatomic) IBOutlet UIImageView *imageview;
 @property (weak, nonatomic) IBOutlet UIImageView *umi_View;
