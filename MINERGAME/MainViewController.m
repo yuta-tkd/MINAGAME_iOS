@@ -251,10 +251,10 @@ const float VIEW_WIDTH = 8700;
                 NSString* touch_Path = jsonArray[@"allSensors"][@"Touches"];
                 NSLog(@"photo_path:%@",photo_Path);
                 NSString *text = [jsonArray[@"allSensors"][@"Photos"] stringValue];
-               if ([text isKindOfClass:[NSString class]] && text.length > 0) {
-                   // something
-                    NSLog(@"aaa");
-                }
+//               if ([text isKindOfClass:[NSString class]] && text.length > 0) {
+//                   // something
+//                    NSLog(@"aaa");
+//                }
                 if (photo_Path != NULL && !jsonArray[@"allSensors"][@"Photos"]) {
                     CustomButton *btn_Photo = [CustomButton buttonWithType:UIButtonTypeCustom];
                     [btn_Photo setImage:[UIImage imageNamed:@"photo.png"]  forState:UIControlStateNormal];
