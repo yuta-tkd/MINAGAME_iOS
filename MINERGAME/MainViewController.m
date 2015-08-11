@@ -57,9 +57,10 @@ int aaa = 0;
     // パスをCAKeyframeAnimationオブジェクトにセット
     animation.path = curvedPath;
     
-    
+
     // パスを解放
    // CGPathRelease(curvedPath);
+    CGPathRelease(curvedPath);
     
     NSMutableArray *imageList = [NSMutableArray array];
     for (int i = 0; i <= 16; i++) {
@@ -198,7 +199,6 @@ int aaa = 0;
     if (change_Hour < 0) {
         change_Hour +=24;
     }
-
     
     NSLog(@"START_HOUR:[%ld]",(long)START_HOUR);
     NSLog(@"change_Hour:[%ld]",(long)change_Hour);
@@ -214,7 +214,7 @@ int aaa = 0;
         contentsView[i].frame = CGRectMake(60*i, 100, 46.875, 300);
         contentsView[i].tag = i;
         contentsView[i].userInteractionEnabled = YES;
-        //contentsView[i].backgroundColor = [UIColor redColor];
+        contentsView[i].backgroundColor = [UIColor redColor];
         [scrollView addSubview:contentsView[i]];
     }
     //int user_temp = [jsonArray[@"temperatures"][0][@"Temperature"][@"temperature"] intValue];
@@ -230,16 +230,24 @@ int aaa = 0;
 //                NSLog(@"change_time_2:[%@]",change_Time);
 //                NSLog(@"change_hour:[%ld]",(long)change_Hour);
                 UILabel *time_Label = [[UILabel alloc] init];
+                UILabel *temp_Label = [[UILabel alloc] init];
                 
                 if (START_HOUR == change_Hour) {
                     NSLog(@"START_HOUR_2:[%ld]",(long)START_HOUR);
-                    time_Label.frame = CGRectMake(0, 10, 65, 18);
+                    time_Label.frame = CGRectMake(5, 10, 65, 18);
+                    time_Label.textAlignment = NSTextAlignmentCenter;
                     time_Label.textColor = [UIColor blackColor];
-                    time_Label.font = [UIFont fontWithName:@"RuikaKyohkan-05" size:13];
+                    time_Label.font = [UIFont fontWithName:@"RuikaKyohkan-05" size:18];
                     time_Label.textAlignment = NSTextAlignmentLeft;
-                    time_Label.text = [NSString stringWithFormat:@"%d", START_HOUR];
+                    time_Label.text = [NSString stringWithFormat:@"%ld", START_HOUR];
                     NSLog(@"START_TIME_2:[%@]",START_TIME);
                     NSLog(@"change_time_2:[%@]",change_Time);
+                    
+                    temp_Label.frame = CGRectMake(5, 25, 45, 18);
+                    temp_Label.textAlignment = NSTextAlignmentCenter;
+                    temp_Label.font = [UIFont fontWithName:@"RuikaKyohkan-05" size:13];
+                    temp_Label.textAlignment = NSTextAlignmentLeft;
+                    temp_Label.text = [NSString stringWithFormat:@"%d℃",i];
                     
                     START_TIME = [START_TIME dateByAddingTimeInterval:-60*60];
                     NSCalendar* cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
@@ -260,34 +268,33 @@ int aaa = 0;
                 if (change_Hour < 0) {
                     change_Hour +=24;
                 }
-                
-                
-                //NSLog(@"比較:%@,%@",first_Date,second_Date);
-                UILabel *temp_Label = [[UILabel alloc] init];
-                temp_Label.frame = CGRectMake(0, 25, 35, 18);
-                temp_Label.font = [UIFont fontWithName:@"RuikaKyohkan-05" size:13];
-                temp_Label.textAlignment = NSTextAlignmentLeft;
-                temp_Label.text = [NSString stringWithFormat:@"%d",i];
-                
                 //btn_Photo
                 UIButton *btn_Photo  = [UIButton buttonWithType:UIButtonTypeCustom];
-                btn_Photo.frame = CGRectMake(-5, 50, 40, 40);
                 [btn_Photo setImage:[UIImage imageNamed:@"photo.png"] forState:UIControlStateNormal];
                 [btn_Photo addTarget:self
                         action:@selector(touch_btnPhoto:) forControlEvents:UIControlEventTouchUpInside];
-                
                 //btn_Voice
                 UIButton *btn_Voice  = [UIButton buttonWithType:UIButtonTypeCustom];
-                btn_Voice.frame = CGRectMake(-5, 120, 40, 40);
                 [btn_Voice setImage:[UIImage imageNamed:@"sound.png"] forState:UIControlStateNormal];
                 [btn_Voice addTarget:self action:@selector(touch_btnVoice:) forControlEvents:UIControlEventTouchUpInside];
-                
                 //btn_Touch
                 UIButton *btn_Touch  = [UIButton buttonWithType:UIButtonTypeCustom];
-                btn_Touch.frame = CGRectMake(-5, 190, 40, 40);
                 [btn_Touch setImage:[UIImage imageNamed:@"touch.png"] forState:UIControlStateNormal];
+                btn_Touch.enabled = NO;
+                btn_Touch.adjustsImageWhenDisabled = NO;
                 [btn_Touch addTarget:self action:@selector(touch_btnTouch:) forControlEvents:UIControlEventTouchUpInside];
                 
+                if (i%2==0) {
+                    btn_Touch.frame = CGRectMake(-5, 50, 48, 48);
+                    btn_Voice.frame = CGRectMake(-5, 120, 48, 48);
+                    btn_Photo.frame = CGRectMake(-5, 190, 48, 48);
+                }
+                else{
+                    btn_Touch.frame = CGRectMake(-5, 85, 48, 48);
+                    btn_Photo.frame = CGRectMake(-5, 225, 48, 48);
+                    btn_Voice.frame = CGRectMake(-5, 155, 48, 48);
+                }
+                contentsView[i].image = [UIImage imageNamed:@"sen.png"];
                 [contentsView[i] addSubview:time_Label];
                 [contentsView[i] addSubview:temp_Label];
                 [contentsView[i] addSubview:btn_Touch];
@@ -326,23 +333,21 @@ int aaa = 0;
     imageView.image = img;
     // UIView
     UIScreen* screen = [UIScreen mainScreen];
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0,0.0,screen.bounds.size.width,screen.bounds.size.height)];
-    view.backgroundColor =  [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.4];
+    UIView *photo_View = [[UIView alloc] initWithFrame:CGRectMake(0.0,0.0,screen.bounds.size.width,screen.bounds.size.height)];
+    photo_View.backgroundColor =  [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.4];
     //UITapGesture
-    UITapGestureRecognizer *tapGesture =
-    [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(photo_view_Tapped:)];
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(photo_view_Tapped:)];
 
-    [view addGestureRecognizer:tapGesture];
-    [view addSubview:imageView];
-    [self.view.window addSubview:view];
+    [photo_View addGestureRecognizer:tapGesture];
+    [photo_View addSubview:imageView];
+    [self.view.window addSubview:photo_View];
     
 }
 
 - (void)photo_view_Tapped:(UITapGestureRecognizer *)sender
 {
-    NSLog(@"タップされました．");
-    UIView *view = sender.view;
-    [view removeFromSuperview];
+    UIView *del_View = (UIView*)sender.view;
+    [del_View removeFromSuperview];
 }
 
 #pragma mark ###音声がタッチされたら呼ばれる###
@@ -354,12 +359,35 @@ int aaa = 0;
     //仮URL
     NSString* path = @"http://ec2-52-69-253-248.ap-northeast-1.compute.amazonaws.com/edison/sounds/e0a78816c2f28fccad285db710263999.wav";
     NSURL* sound_url = [NSURL URLWithString:path];
-    NSData* data = [NSData dataWithContentsOfURL:sound_url];
     
-    AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc] initWithData:data error:nil];
-    audioPlayer.numberOfLoops = -1;
+    // stremar player
+
+    if(self.audioStremarPlayer){
+        [self.audioStremarPlayer removeObserver:self forKeyPath:@"status"];
+    }
+    self.audioStremarPlayer = [[AVPlayer alloc]initWithURL:sound_url];
+    [self.audioStremarPlayer addObserver:self forKeyPath:@"status" options:0 context:nil];
     
-    [audioPlayer play];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    
+    if (object == self.audioStremarPlayer && [keyPath isEqualToString:@"status"]) {
+        if (self.audioStremarPlayer.status == AVPlayerStatusFailed)
+        {
+            NSLog(@"AVPlayer Failed");
+        }
+        else if (self.audioStremarPlayer.status == AVPlayerStatusReadyToPlay)
+        {
+            [self.audioStremarPlayer play];
+        }
+        else if (self.audioStremarPlayer.status == AVPlayerItemStatusUnknown)
+        {
+            NSLog(@"AVPlayer Unknown");
+            
+        }
+    }
 }
 
 #pragma mark ###触るがタッチされたら呼ばれる###
@@ -372,14 +400,13 @@ int aaa = 0;
     NSURLRequest  *request = [[NSURLRequest alloc] initWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request queue:nil completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
 #pragma mark ###10分更新###
-        for (int i = 0; i < 144; i++) {
+        for (int i = 144; i > 0; --i) {
             [contentsView[i] removeFromSuperview];
             contentsView[i] = [[UIImageView alloc] init];
             contentsView[i].frame = CGRectMake(60*i, 100, 46.875, 300);
             contentsView[i].tag = i;
             contentsView[i].userInteractionEnabled = YES;
             [scrollView addSubview:contentsView[i]];
-
             if (1 >= 0) {
                 
                 UILabel *time_Label = [[UILabel alloc] init];
@@ -403,6 +430,8 @@ int aaa = 0;
                 [btn_Voice setImage:[UIImage imageNamed:@"sound.png"] forState:UIControlStateNormal];
                 UIButton *btn_Touch  = [UIButton buttonWithType:UIButtonTypeCustom];
                 btn_Touch.frame = CGRectMake(-5, 190, 40, 40);
+                btn_Touch.enabled = NO;
+                btn_Touch.adjustsImageWhenDisabled = NO;
                 [btn_Touch setImage:[UIImage imageNamed:@"touch.png"] forState:UIControlStateNormal];
                 [contentsView[i] addSubview:time_Label];
                 [contentsView[i] addSubview:temp_Label];
