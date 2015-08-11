@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
+#import "CustomButton.h"
 
 @interface MainViewController : UIViewController<UIScrollViewDelegate,AVAudioPlayerDelegate,UIWebViewDelegate>{
     dispatch_queue_t mainQueue; 
@@ -16,6 +17,8 @@
     UIImageView *contentsView[168];
     UIImageView *imageview;
     UIView *view;
+    NSDictionary *jsonArray;
+    CustomButton *customButton;
 }
 @property (weak, nonatomic) IBOutlet UIImageView *imageview;
 @property (weak, nonatomic) IBOutlet UIImageView *umi_View;
@@ -24,6 +27,7 @@
 
 @property(nonatomic) AVAudioPlayer *audioPlayer;
 @property (nonatomic,strong) AVPlayer *audioStremarPlayer;
+@property (nonatomic, retain) CustomButton *customButton;
 
 @end
 

@@ -62,10 +62,11 @@
     NSString *body = [NSString stringWithFormat:@"edisonName=%@",textField.text];
     request.HTTPBody = [body dataUsingEncoding:NSUTF8StringEncoding];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        
         self.indicatorBaseView.hidden =YES;
         NSError *error=nil;
+#pragma mark ###JSON###
         NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+        NSLog(@"ログイン%@",jsonArray);
         bool user_id = [[jsonArray valueForKeyPath:@"check"] boolValue];
         if (user_id) {
             NSLog(@"成功");
