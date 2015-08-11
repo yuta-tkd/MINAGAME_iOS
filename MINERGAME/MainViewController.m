@@ -33,7 +33,7 @@ int aaa = 0;
     animation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
     animation.fillMode = kCAFillModeForwards;
     animation.removedOnCompletion = NO;
-    animation.duration = 5;
+    animation.duration = 7;
     animation.repeatCount = HUGE_VALF;
     animation.beginTime = CACurrentMediaTime() + 2;
 //    CACurrentMediaTime() + 5;
@@ -43,9 +43,9 @@ int aaa = 0;
     // 放物線のパスを生成
     CGFloat jumpHeight = 130;
     CGFloat kStartPosx = -100;
-    CGFloat kStartPosy = 500;
+    CGFloat kStartPosy = 200;
     CGFloat kEndPosx = 400;
-    CGFloat kEndPosy = 500;
+    CGFloat kEndPosy = 200;
     
     curvedPath = CGPathCreateMutable();
     CGPathMoveToPoint(curvedPath, NULL, kStartPosx, kStartPosy);
@@ -82,7 +82,7 @@ int aaa = 0;
     animation1 = [CAKeyframeAnimation animationWithKeyPath:@"position"];
     animation1.fillMode = kCAFillModeForwards;
     animation1.removedOnCompletion = NO;
-    animation1.duration = 5.0;
+    animation1.duration = 7;
     animation1.repeatCount = HUGE_VALF;
     animation1.beginTime = CACurrentMediaTime() + 4;
     
@@ -122,13 +122,13 @@ int aaa = 0;
     group.animations = [NSArray arrayWithObjects:animation, animation1,nil];
     
     imageview.animationImages = imageList;
-    imageview.animationDuration = 1;
+    imageview.animationDuration = 3;
     imageview.animationRepeatCount = 0;
     [view.layer addAnimation:animation forKey:nil];
     [imageview startAnimating];
     
     imageview1.animationImages = imageList1;
-    imageview1.animationDuration = 1;
+    imageview1.animationDuration = 3;
     imageview1.animationRepeatCount = 0;
     [view1.layer addAnimation:animation1 forKey:nil];
     [imageview1 startAnimating];
