@@ -1,31 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jkr-IJ-0eX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="jkr-IJ-0eX">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="RuikaKyohkan-05.TTF">
+            <string>RuikaKyohkan-05</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Main View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController storyboardIdentifier="main" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vXZ-lx-hvc" customClass="MainViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
-                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sck-Ll-65q">
-                                <rect key="frame" x="0.0" y="20" width="640" height="940"/>
-                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="shd-Nv-Ikc">
-                                <rect key="frame" x="0.0" y="20" width="611" height="580"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mHB-bl-Xhd">
-                                <rect key="frame" x="534" y="20" width="30" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mHB-bl-Xhd">
+                                <rect key="frame" x="256" y="40" width="44" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <state key="normal">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -33,84 +28,65 @@
                                     <action selector="touch_btnSetting:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Wv2-B6-EOr"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="sck-Ll-65q">
+                                <rect key="frame" x="0.0" y="20" width="640" height="940"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="shd-Nv-Ikc" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="43w-Mp-Y1z"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="mHB-bl-Xhd" secondAttribute="trailing" constant="20" id="4wO-tp-Kd2"/>
-                            <constraint firstItem="shd-Nv-Ikc" firstAttribute="top" secondItem="mHB-bl-Xhd" secondAttribute="top" id="978-IG-9BT"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="shd-Nv-Ikc" secondAttribute="trailing" constant="-27" id="BcZ-sH-ebx"/>
-                            <constraint firstItem="shd-Nv-Ikc" firstAttribute="bottom" secondItem="2fi-mo-0CV" secondAttribute="top" id="UzS-5O-p4f"/>
-                            <constraint firstItem="mHB-bl-Xhd" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="daU-ul-Qna"/>
-                        </constraints>
                     </view>
                     <connections>
                         <outlet property="btn_Setting" destination="mHB-bl-Xhd" id="W0q-bO-XXN"/>
-                        <outlet property="imageview" destination="shd-Nv-Ikc" id="Axb-8t-boV"/>
+                        <outlet property="umiView" destination="sck-Ll-65q" id="S5y-OT-T86"/>
                         <outlet property="umi_View" destination="sck-Ll-65q" id="mcm-7X-dWm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-963" y="-335"/>
+            <point key="canvasLocation" x="-513.60000000000002" y="-317.13333333333333"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="NJS-st-9Ho">
             <objects>
                 <viewController storyboardIdentifier="login" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jkr-IJ-0eX" customClass="LoginViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ymw-bq-Ll0"/>
-                        <viewControllerLayoutGuide type="bottom" id="yrj-cf-WpT"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ASy-5L-iKS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ラベル" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Iy-lc-XpW">
-                                <rect key="frame" x="275" y="137" width="51" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="nlR-7s-RCY"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="IDを入力" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mui-r2-v2D">
-                                <rect key="frame" x="252" y="253" width="97" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="97" id="y1X-6a-8aV"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login.jpg" id="xBX-d6-Ori">
+                                <rect key="frame" x="-4" y="-15" width="328" height="598"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="IDを入力" minimumFontSize="17" id="mui-r2-v2D">
+                                <rect key="frame" x="112" y="178" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="send"/>
                                 <connections>
                                     <action selector="text_Field:" destination="jkr-IJ-0eX" eventType="editingDidEndOnExit" id="mUh-gB-0Q2"/>
                                 </connections>
                             </textField>
-                            <view alpha="0.29999999999999966" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QlI-9L-bX0">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="637"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ログイン" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2Iy-lc-XpW">
+                                <rect key="frame" x="123" y="67" width="74" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="RuikaKyohkan-05" family="RuikaKyohkan-05" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view alpha="0.29999999999999966" contentMode="scaleToFill" id="QlI-9L-bX0">
+                                <rect key="frame" x="0.0" y="-32" width="320" height="605"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="ClP-ch-E2n">
-                                        <rect key="frame" x="282" y="310" width="37" height="37"/>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" id="ClP-ch-E2n">
+                                        <rect key="frame" x="142" y="310" width="37" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                     </activityIndicatorView>
                                 </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <constraints>
-                                    <constraint firstItem="ClP-ch-E2n" firstAttribute="top" secondItem="QlI-9L-bX0" secondAttribute="top" constant="310" id="q8n-y7-wE6"/>
-                                    <constraint firstItem="ClP-ch-E2n" firstAttribute="centerX" secondItem="QlI-9L-bX0" secondAttribute="centerX" id="vKF-Af-o8f"/>
-                                </constraints>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="2Iy-lc-XpW" firstAttribute="top" secondItem="ymw-bq-Ll0" secondAttribute="bottom" constant="117" id="1es-S0-CVI"/>
-                            <constraint firstItem="mui-r2-v2D" firstAttribute="centerX" secondItem="ASy-5L-iKS" secondAttribute="centerX" id="7Ah-Nh-Szp"/>
-                            <constraint firstItem="QlI-9L-bX0" firstAttribute="top" secondItem="ASy-5L-iKS" secondAttribute="top" id="EBt-VZ-fLt"/>
-                            <constraint firstItem="mui-r2-v2D" firstAttribute="top" secondItem="2Iy-lc-XpW" secondAttribute="bottom" constant="95" id="FM9-h5-9Rg"/>
-                            <constraint firstItem="2Iy-lc-XpW" firstAttribute="centerX" secondItem="mui-r2-v2D" secondAttribute="centerX" id="TdD-u6-4Dt"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="QlI-9L-bX0" secondAttribute="bottom" constant="-37" id="e5k-zd-Bwq"/>
-                            <constraint firstItem="QlI-9L-bX0" firstAttribute="centerX" secondItem="2Iy-lc-XpW" secondAttribute="centerX" id="krK-eG-uxx"/>
-                            <constraint firstItem="QlI-9L-bX0" firstAttribute="leading" secondItem="ASy-5L-iKS" secondAttribute="leading" id="nVb-oj-Bde"/>
-                        </constraints>
                     </view>
                     <connections>
                         <outlet property="indicatorBaseView" destination="QlI-9L-bX0" id="33B-6O-aaQ"/>
@@ -118,7 +94,10 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eg5-bO-PHU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-534" y="828"/>
+            <point key="canvasLocation" x="-389.86666666666667" y="479.95999999999998"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="login.jpg" width="640" height="1136"/>
+    </resources>
 </document>

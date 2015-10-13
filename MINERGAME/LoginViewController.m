@@ -19,6 +19,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.indicatorBaseView.hidden =YES;
+//    UILabel *time_Label = [[UILabel alloc] init];
+//    time_Label.frame = CGRectMake(120, 100, 200, 40);
+//    time_Label.textColor = [UIColor blackColor];
+//    time_Label.font = [UIFont fontWithName:@"RuikaKyohkan-05" size:30];
+//    time_Label.textAlignment = NSTextAlignmentCenter;
+//    time_Label.text = @"ログイン";
+//    [self.view addSubview:time_Label];
     
 }
 -(void)viewDidAppear:(BOOL)animated{
