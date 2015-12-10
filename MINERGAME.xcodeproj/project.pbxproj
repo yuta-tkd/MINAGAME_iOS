@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A2903FA1BDCF3B5005B1F20 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A2903F91BDCF3B5005B1F20 /* QuartzCore.framework */; };
 		0A3F4C8C1BA51BA800414D0C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3F4C8B1BA51BA800414D0C /* UIKit.framework */; };
 		0A3F4C8E1BA51BC200414D0C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3F4C8D1BA51BC200414D0C /* AudioToolbox.framework */; };
 		0A3F4C8F1BA51BD200414D0C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3F4C891BA51B0900414D0C /* AVFoundation.framework */; };
@@ -71,7 +72,6 @@
 		0A4CF3C71B79CCE40074591D /* login.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A4CF3C61B79CCE40074591D /* login.jpg */; };
 		0A4CF3C91B79D6680074591D /* touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4CF3C81B79D6680074591D /* touch.png */; };
 		0A69025F1B79090F00A1B650 /* RuikaKyohkan-05.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 0A69025E1B79082900A1B650 /* RuikaKyohkan-05.TTF */; };
-		0A6903551B79315300A1B650 /* line.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6903541B79315300A1B650 /* line.png */; };
 		0A6903581B7935A800A1B650 /* CustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6903571B7935A800A1B650 /* CustomButton.m */; };
 		0A69FDE01B77108900A1B650 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		0A8C0CD81B74C22500E6BC61 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8C0CD71B74C22500E6BC61 /* main.m */; };
@@ -82,9 +82,11 @@
 		0A8C0CF21B74C22500E6BC61 /* MINERGAMETests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8C0CF11B74C22500E6BC61 /* MINERGAMETests.m */; };
 		0A8C0D021B74E07400E6BC61 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8C0D011B74E07400E6BC61 /* MainViewController.m */; };
 		0A8C0D051B74F31A00E6BC61 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8C0D041B74F31A00E6BC61 /* LoginViewController.m */; };
-		0AF77E991BC7CB870054A1C2 /* Yu Gothic Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0AF77E981BC7CB870054A1C2 /* Yu Gothic Bold.otf */; settings = {ASSET_TAGS = (); }; };
+		0A8E10EC1BE4D413002F248C /* line.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A8E10EB1BE4D413002F248C /* line.png */; };
+		0AD7BB0B1BDDD12D0025B5FE /* sen.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AD7BB0A1BDDD12D0025B5FE /* sen.png */; };
+		0AF77E991BC7CB870054A1C2 /* Yu Gothic Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0AF77E981BC7CB870054A1C2 /* Yu Gothic Bold.otf */; };
 		0AF77E9A1BC7CBD70054A1C2 /* Yu Gothic Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0AF77E981BC7CB870054A1C2 /* Yu Gothic Bold.otf */; };
-		0AF77E9E1BCC1AAF0054A1C2 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AF77E9D1BCC1AAF0054A1C2 /* circle.png */; settings = {ASSET_TAGS = (); }; };
+		0AF77E9E1BCC1AAF0054A1C2 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AF77E9D1BCC1AAF0054A1C2 /* circle.png */; };
 		0AFF844C1B76E5BB00B95B87 /* photo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AFF84481B76E5BB00B95B87 /* photo.png */; };
 		0AFF844D1B76E5BB00B95B87 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AFF84491B76E5BB00B95B87 /* setting.png */; };
 		0AFF844E1B76E5BB00B95B87 /* sound.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AFF844A1B76E5BB00B95B87 /* sound.png */; };
@@ -133,6 +135,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A2903F91BDCF3B5005B1F20 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		0A3F4C891BA51B0900414D0C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		0A3F4C8B1BA51BA800414D0C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0A3F4C8D1BA51BC200414D0C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -197,7 +200,6 @@
 		0A4CF3C61B79CCE40074591D /* login.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = login.jpg; sourceTree = "<group>"; };
 		0A4CF3C81B79D6680074591D /* touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = touch.png; sourceTree = "<group>"; };
 		0A69025E1B79082900A1B650 /* RuikaKyohkan-05.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RuikaKyohkan-05.TTF"; sourceTree = "<group>"; };
-		0A6903541B79315300A1B650 /* line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = line.png; sourceTree = "<group>"; };
 		0A6903561B7935A800A1B650 /* CustomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomButton.h; sourceTree = "<group>"; };
 		0A6903571B7935A800A1B650 /* CustomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomButton.m; sourceTree = "<group>"; };
 		0A8C0CD21B74C22500E6BC61 /* MINERGAME.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MINERGAME.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -215,6 +217,8 @@
 		0A8C0D011B74E07400E6BC61 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		0A8C0D031B74F31A00E6BC61 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		0A8C0D041B74F31A00E6BC61 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		0A8E10EB1BE4D413002F248C /* line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = line.png; sourceTree = "<group>"; };
+		0AD7BB0A1BDDD12D0025B5FE /* sen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sen.png; sourceTree = "<group>"; };
 		0AF77E981BC7CB870054A1C2 /* Yu Gothic Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Yu Gothic Bold.otf"; sourceTree = "<group>"; };
 		0AF77E9D1BCC1AAF0054A1C2 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
 		0AFF84481B76E5BB00B95B87 /* photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo.png; sourceTree = "<group>"; };
@@ -259,6 +263,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A2903FA1BDCF3B5005B1F20 /* QuartzCore.framework in Frameworks */,
 				0A3F4C8F1BA51BD200414D0C /* AVFoundation.framework in Frameworks */,
 				0A3F4C8E1BA51BC200414D0C /* AudioToolbox.framework in Frameworks */,
 				0A3F4C8C1BA51BA800414D0C /* UIKit.framework in Frameworks */,
@@ -288,6 +293,7 @@
 		0A8C0CC91B74C22500E6BC61 = {
 			isa = PBXGroup;
 			children = (
+				0A2903F91BDCF3B5005B1F20 /* QuartzCore.framework */,
 				0A3F4C901BA51C3700414D0C /* Framework */,
 				0A8C0CD41B74C22500E6BC61 /* MINERGAME */,
 				0A8C0CEE1B74C22500E6BC61 /* MINERGAMETests */,
@@ -355,6 +361,7 @@
 		0AFF84471B76E59100B95B87 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				0A8E10EB1BE4D413002F248C /* line.png */,
 				0AF77E9D1BCC1AAF0054A1C2 /* circle.png */,
 				0A4CF3C61B79CCE40074591D /* login.jpg */,
 				BA67629F1B7982DE00B14A68 /* wave */,
@@ -369,7 +376,6 @@
 			isa = PBXGroup;
 			children = (
 				0A4CF3C81B79D6680074591D /* touch.png */,
-				0A6903541B79315300A1B650 /* line.png */,
 				0AFF84481B76E5BB00B95B87 /* photo.png */,
 				0AFF84491B76E5BB00B95B87 /* setting.png */,
 				0AFF844A1B76E5BB00B95B87 /* sound.png */,
@@ -402,6 +408,7 @@
 		BA67627C1B78EF5600B14A68 /* minagame1 */ = {
 			isa = PBXGroup;
 			children = (
+				0AD7BB0A1BDDD12D0025B5FE /* sen.png */,
 				BA67627D1B78EF7000B14A68 /* minagame1_000.png */,
 				BA67627E1B78EF7000B14A68 /* minagame1_001.png */,
 				BA67627F1B78EF7000B14A68 /* minagame1_002.png */,
@@ -612,10 +619,10 @@
 				0A4CF3A31B79BB980074591D /* wave_023.png in Resources */,
 				0A4CF3A91B79BB980074591D /* wave_029.png in Resources */,
 				0A4CF3921B79BB980074591D /* wave_006.png in Resources */,
+				0A8E10EC1BE4D413002F248C /* line.png in Resources */,
 				BA6762791B78EF5200B14A68 /* minagame2_012.png in Resources */,
 				0A4CF3C11B79BB980074591D /* wave_053.png in Resources */,
 				0A4CF3A81B79BB980074591D /* wave_028.png in Resources */,
-				0A6903551B79315300A1B650 /* line.png in Resources */,
 				BA67626D1B78EF5200B14A68 /* minagame2_000.png in Resources */,
 				0A4CF3B41B79BB980074591D /* wave_040.png in Resources */,
 				BA6762711B78EF5200B14A68 /* minagame2_004.png in Resources */,
@@ -652,6 +659,7 @@
 				BA6762731B78EF5200B14A68 /* minagame2_006.png in Resources */,
 				0A4CF3A01B79BB980074591D /* wave_020.png in Resources */,
 				BA67627B1B78EF5200B14A68 /* minagame2_014.png in Resources */,
+				0AD7BB0B1BDDD12D0025B5FE /* sen.png in Resources */,
 				0A4CF39A1B79BB980074591D /* wave_014.png in Resources */,
 				0AF77E991BC7CB870054A1C2 /* Yu Gothic Bold.otf in Resources */,
 				BA67629B1B78EF7000B14A68 /* minagame1_013.png in Resources */,
@@ -825,7 +833,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = MINERGAME/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "MINAMI.$(PRODUCT_NAME:rfc1034identifier)";
@@ -842,7 +850,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = MINERGAME/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "MINAMI.$(PRODUCT_NAME:rfc1034identifier)";

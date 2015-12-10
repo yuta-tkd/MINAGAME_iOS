@@ -74,17 +74,17 @@ const float VIEW_WIDTH = 8700;
     CGPathRelease(curvedPath1);
     
     
-    image = [UIImage imageNamed:@"minagame1_001.png"];
-    image1 = [UIImage imageNamed:@"minagame2_001.png"];
-    imageview = [[UIImageView alloc]initWithImage:image];
-    imageview.frame = CGRectMake(0, 0, 100, 100);
-    imageview1 = [[UIImageView alloc]initWithImage:image1];
-    imageview1.frame = CGRectMake(0, 0, 160, 160);
-    view = [[UIView alloc] initWithFrame:CGRectMake(-500, -500, 100, 100)];
-    view1 = [[UIView alloc] initWithFrame:CGRectMake(-500, -500, 160, 160)];
+    kame_Image = [UIImage imageNamed:@"minagame1_001.png"];
+    kame_Image1 = [UIImage imageNamed:@"minagame2_001.png"];
+    kame_ImgView = [[UIImageView alloc]initWithImage:kame_Image];
+    kame_ImgView.frame = CGRectMake(0, 0, 100, 100);
+    kame_ImgView1 = [[UIImageView alloc]initWithImage:kame_Image1];
+    kame_ImgView1.frame = CGRectMake(0, 0, 160, 160);
+    kame_View = [[UIView alloc] initWithFrame:CGRectMake(-500, -500, 100, 100)];
+    kame_View1 = [[UIView alloc] initWithFrame:CGRectMake(-500, -500, 160, 160)];
     
     
-    NSMutableArray *imageList = [NSMutableArray array];
+    imageList = [NSMutableArray array];
     for (int i = 0; i <= 16; i++) {
         NSString *imagePath = [NSString stringWithFormat:@"minagame1_%03d.png", i];
         UIImage *img = [UIImage imageNamed:imagePath];
@@ -96,7 +96,7 @@ const float VIEW_WIDTH = 8700;
         }
     }
     
-    NSMutableArray *imageList1 = [NSMutableArray array];
+    imageList1 = [NSMutableArray array];
     for (int i = 0; i <= 14; i++) {
         NSString *imagePath1 = [NSString stringWithFormat:@"minagame2_%03d.png", i];
         UIImage *img1 = [UIImage imageNamed:imagePath1];
@@ -107,7 +107,7 @@ const float VIEW_WIDTH = 8700;
         }
     }
     
-    NSMutableArray *imageList_Umi = [NSMutableArray array];
+    imageList_Umi = [NSMutableArray array];
     for (int i = 0; i <= 57; i++) {
         NSString *imagePath = [NSString stringWithFormat:@"wave_%03d.png", i];
         UIImage *img = [UIImage imageNamed:imagePath];
@@ -123,25 +123,25 @@ const float VIEW_WIDTH = 8700;
     [self.umi_View startAnimating];
     
     
-    imageview.animationImages = imageList;
-    imageview.animationDuration = 2;
-    imageview.animationRepeatCount = 0;
-    [view.layer addAnimation:animation forKey:nil];
-    [view addSubview:imageview];
-    [self.view addSubview:view];
-    [imageview startAnimating];
+    kame_ImgView.animationImages = imageList;
+    kame_ImgView.animationDuration = 2;
+    kame_ImgView.animationRepeatCount = 0;
+    [kame_View.layer addAnimation:animation forKey:nil];
+    [kame_View addSubview:kame_ImgView];
+    [self.view addSubview:kame_View];
+    [kame_ImgView startAnimating];
     
-    imageview1.animationImages = imageList1;
-    imageview1.animationDuration = 2;
-    imageview1.animationRepeatCount = 0;
+    kame_ImgView1.animationImages = imageList1;
+    kame_ImgView1.animationDuration = 2;
+    kame_ImgView1.animationRepeatCount = 0;
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 10.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [view.layer removeAllAnimations];
-        [view1.layer addAnimation:animation1 forKey:nil];
-        [view1 addSubview:imageview1];
-        [self.view addSubview:view1];
-        [imageview1 startAnimating];
-        [NSTimer scheduledTimerWithTimeInterval:7.0 target:self selector:@selector(animation22:) userInfo:nil repeats:YES];
+        [kame_View.layer removeAllAnimations];
+        [kame_View1.layer addAnimation:animation1 forKey:nil];
+        [kame_View1 addSubview:kame_ImgView1];
+        [self.view addSubview:kame_View1];
+        [kame_ImgView1 startAnimating];
+        animeTimer = [NSTimer scheduledTimerWithTimeInterval:7.0 target:self selector:@selector(animation22:) userInfo:nil repeats:YES];
     });
 #pragma mark duration
     
@@ -156,7 +156,6 @@ const float VIEW_WIDTH = 8700;
     self.btn_Setting.layer.zPosition = 1;
     [self.btn_Setting setImage:a_setting_Img forState:UIControlStateNormal];
     
-    // Do any additional setup after loading the view.
     scrollView = [[UIScrollView alloc]init];
     scrollView.layer.zPosition = 2;
     scrollView.delegate=self;
@@ -169,19 +168,14 @@ const float VIEW_WIDTH = 8700;
     [scrollView setContentSize:CGSizeMake(VIEW_WIDTH, self.view.frame.size.height-100)];
     [self.view addSubview:scrollView];
     scrollView.contentOffset = CGPointMake(8320,0);
-    //NSLog(@"オフセット:x:%f,y:%f",scrollView.contentOffset.x,scrollView.contentOffset.y);
-    
     
     __block NSDate* START_TIME = [NSDate date];
     __block NSDate* change_Time = [NSDate date];
-    //NSDate* db_Time = [NSDate date];
     START_TIME = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
     change_Time = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
-    //NSLog(@"START_HOUR:[%@]",START_TIME);
-    //NSLog(@"change_Time:[%@]",change_Time);
     
     NSDateFormatter *formater = [[NSDateFormatter alloc] init];
-    [formater setDateFormat:@"YYYY-MM-dd HH:mm:ss"];//DB用
+    [formater setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
     
     NSCalendar* cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSCalendarUnit unitFlags =  NSCalendarUnitDay| NSCalendarUnitHour | NSCalendarUnitMinute;
@@ -202,30 +196,22 @@ const float VIEW_WIDTH = 8700;
         contentsView[i] = [[UIImageView alloc] init];
         contentsView[i].frame = CGRectMake(60*i, 100, 46.875, 300);
         contentsView[i].tag = i;
-//        contentsView[i].backgroundColor = [UIColor redColor];
         contentsView[i].layer.zPosition = 1;
         contentsView[i].userInteractionEnabled = YES;
         [scrollView addSubview:contentsView[i]];
         
-        //int user_temp = [jsonArray[@"temperatures"][0][@"Temperature"][@"temperature"] intValue];
         
 #pragma mark ###24時間更新###
         url = [NSURL URLWithString:@"http://ec2-52-69-253-248.ap-northeast-1.compute.amazonaws.com/api/allSensor"];
         request = [[NSMutableURLRequest alloc] initWithURL:url];
         request.HTTPMethod = @"POST";
-        //NSLog(@"###ID:%@###",[ud valueForKey:@"U_ID"]);
-        
-//        NSLog(@"START_TIME:[%@]",START_TIME);
-//        NSLog(@"change_time:[%@]",change_Time);
-//        NSLog(@"START_HOUR:[%ld]",(long)START_HOUR);
-//        NSLog(@"change_Hour:[%ld]",(long)change_Hour);
-
-        START_TIME = [START_TIME dateByAddingTimeInterval:-60*10];
-        [formater setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-        dbTime_String = [formater stringFromDate:START_TIME];
+     
         
         NSString *body = [NSString stringWithFormat:@"edisonName=%@&startTime=%@&duration=%d",[ud valueForKey:@"U_ID"],dbTime_String,10];
         request.HTTPBody = [body dataUsingEncoding:NSUTF8StringEncoding];
+        START_TIME = [START_TIME dateByAddingTimeInterval:-60*10];
+        [formater setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+        dbTime_String = [formater stringFromDate:START_TIME];
         
         
         dateComponents_Hour = [cal components:unitFlags fromDate:START_TIME];
@@ -235,210 +221,63 @@ const float VIEW_WIDTH = 8700;
         if (START_HOUR < 0) {
             START_HOUR +=24;
         }
-        NSLog(@"時間:%ld",START_MINUTE);
         
         if ((50 < START_MINUTE && 5<= START_MINUTE%10) || (START_MINUTE < 10 && START_MINUTE%10<= 4)) {
-            UILabel *time_Label = [[UILabel alloc] init];
-            temp_Label[i] = [[UILabel alloc] init];
+            time_Label[i] = [[UILabel alloc] init];
+            temprature_Label[i] = [[UILabel alloc] init];
             NSString *timelabel_BackPath = @"circle.png";
             UIImage *time_Back = [UIImage imageNamed:timelabel_BackPath];
             UIImageView *time_Back_View = [[UIImageView alloc] initWithImage:time_Back];
             time_Back_View.layer.zPosition = 2;
             time_Back_View.frame = CGRectMake(-24, -44, 88, 88);
             
-            time_Label.frame = CGRectMake(-11, -29, 65, 30);
-            time_Label.layer.zPosition = 3;
-            time_Label.textColor = [UIColor colorWithRed:190/255.0 green:217/255.0 blue:229/255.0 alpha:1];
-            time_Label.textAlignment = NSTextAlignmentCenter;
-            time_Label.font = [UIFont fontWithName:@"YuGo-Bold" size:25];
-            time_Label.textAlignment = NSTextAlignmentLeft;
+            time_Label[i].frame = CGRectMake(-12, -16, 75, 30);
+            time_Label[i].layer.zPosition = 3;
+            time_Label[i].textColor = [UIColor colorWithRed:190/255.0 green:217/255.0 blue:229/255.0 alpha:1];
+            time_Label[i].textAlignment = NSTextAlignmentCenter;
+            time_Label[i].font = [UIFont fontWithName:@"YuGo-Bold" size:25];
+            time_Label[i].textAlignment = NSTextAlignmentLeft;
             if (50 < START_MINUTE && 5<= START_MINUTE%10) {
-                time_Label.text = [NSString stringWithFormat:@"%ld:00", START_HOUR+1];
+                if (START_HOUR <= 8) {
+                    time_Label[i].text = [NSString stringWithFormat:@"0%ld:00", START_HOUR+1];
+                }
+                else{
+                    time_Label[i].text = [NSString stringWithFormat:@"%ld:00", START_HOUR+1];
+                }
             }
             else{
-                time_Label.text = [NSString stringWithFormat:@"%ld:00", START_HOUR];
+                if (START_HOUR <= 9) {
+                    time_Label[i].text = [NSString stringWithFormat:@"0%ld:00", START_HOUR];
+                }
+                else{
+                    time_Label[i].text = [NSString stringWithFormat:@"%ld:00", START_HOUR];
+                }
             }
-            
-            temp_Label[i].frame = CGRectMake(-1.5, 4, 80, 30);
-            temp_Label[i].tag = i;
-            temp_Label[i].layer.zPosition = 3;
-            temp_Label[i].textColor = [UIColor colorWithRed:190/255.0 green:217/255.0 blue:229/255.0 alpha:1];
-            temp_Label[i].textAlignment = NSTextAlignmentCenter;
-            temp_Label[i].font = [UIFont fontWithName:@"YuGo-Bold" size:25];
-            temp_Label[i].textAlignment = NSTextAlignmentLeft;
+            NSLog(@"温度番号%d:",i);
+            temprature_Label[i].frame = CGRectMake(-1.5, 4, 80, 30);
+            temprature_Label[i].tag = i;
+            temprature_Label[i].layer.zPosition = 3;
+            temprature_Label[i].textColor = [UIColor colorWithRed:190/255.0 green:217/255.0 blue:229/255.0 alpha:1];
+            temprature_Label[i].textAlignment = NSTextAlignmentCenter;
+            temprature_Label[i].font = [UIFont fontWithName:@"YuGo-Bold" size:25];
+            temprature_Label[i].textAlignment = NSTextAlignmentLeft;
             
             [contentsView[i] addSubview:time_Back_View];
-            [contentsView[i] addSubview:time_Label];
-            [contentsView[i] addSubview:temp_Label[i]];
-        }
-        /*
-        if (START_HOUR == change_Hour) {
-            not_One++;
-            if (not_One != 1) {
-                UILabel *time_Label = [[UILabel alloc] init];
-                UILabel *temp_Label = [[UILabel alloc] init];
-                NSString *timelabel_BackPath = @"circle.png";
-                UIImage *time_Back = [UIImage imageNamed:timelabel_BackPath];
-                UIImageView *time_Back_View = [[UIImageView alloc] initWithImage:time_Back];
-                time_Back_View.layer.zPosition = 2;
-                time_Back_View.frame = CGRectMake(-24, -18, 88, 88);
-                
-                time_Label.frame = CGRectMake(-6, -6, 65, 30);
-                time_Label.layer.zPosition = 3;
-                time_Label.textColor = [UIColor colorWithRed:190/255.0 green:217/255.0 blue:229/255.0 alpha:1];
-                time_Label.textAlignment = NSTextAlignmentCenter;
-                time_Label.font = [UIFont fontWithName:@"YuGo-Bold" size:25];
-                time_Label.textAlignment = NSTextAlignmentLeft;
-                time_Label.text = [NSString stringWithFormat:@"%ld:00", START_HOUR+1];
-                
-                temp_Label.frame = CGRectMake(-6, 29, 80, 30);
-                temp_Label.layer.zPosition = 3;
-                temp_Label.textColor = [UIColor colorWithRed:190/255.0 green:217/255.0 blue:229/255.0 alpha:1];
-                temp_Label.textAlignment = NSTextAlignmentCenter;
-                temp_Label.font = [UIFont fontWithName:@"YuGo-Bold" size:25];
-                temp_Label.textAlignment = NSTextAlignmentLeft;
-                int random_nummber;
-                random_nummber = arc4random() % 6 + 30;
-                
-                NSArray *jsonTemp = [jsonArray valueForKeyPath:@"Temperatures"];
-                
-                
-                temp_Label.text = [NSString stringWithFormat:@"%d℃",[[jsonTemp valueForKey:@"temperature"] intValue]];
-                [contentsView[i] addSubview:time_Back_View];
-                [contentsView[i] addSubview:time_Label];
-                [contentsView[i] addSubview:temp_Label];
-            }
-            
-            
-            START_TIME = [START_TIME dateByAddingTimeInterval:-60*60];
-            NSCalendar* cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-            NSCalendarUnit unitFlags =  NSCalendarUnitDay| NSCalendarUnitHour | NSCalendarUnitMinute;
-            NSDateComponents *dateComponents = [cal components:unitFlags fromDate:START_TIME];
-            START_HOUR = dateComponents.hour -9;
-            if (START_HOUR < 0) {
-                START_HOUR +=24;
-            }
-            NSLog(@"*********START_TIME_2:[%@]*********",START_TIME);
-            NSLog(@"*********change_time_2:[%@]*********",change_Time);
-        }
-        
-        change_Time = [change_Time dateByAddingTimeInterval:-60*10];
-        [formater setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-        dbTime_String = [formater stringFromDate:change_Time];
-        
-        NSCalendar* cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-        NSCalendarUnit unitFlags =  NSCalendarUnitDay| NSCalendarUnitHour | NSCalendarUnitMinute;
-        NSDateComponents *dateComponents = [cal components:unitFlags fromDate:change_Time];
-        change_Hour = dateComponents.hour -9;
-        change_minute = dateComponents.minute;
-        
-        if (change_Hour < 0) {
-            change_Hour +=24;
-        }
-        */
-        /*
-#pragma mark 同期
-        
-//        dispatch_queue_t sub_queue = dispatch_queue_create("sub_queue", 0);
-//        dispatch_async(sub_queue, ^{
-
-        NSURLResponse *response;
-        NSError *error;
-        NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        jsonArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-        NSLog(@"番号:%d",i);
-        if (i > 144) {
-            NSLog(@"データ:%@",jsonArray);
-        }
-        //NSLog(@"Photos：%@", [jsonArray valueForKeyPath:@"Photos"]);
-        
-        NSArray *jsonPhoto = [jsonArray valueForKeyPath:@"Photos"];
-        NSArray *jsonSounds = [jsonArray valueForKeyPath:@"Sounds"];
-        
-        
-        // something
-        
-        //            if ([jsonArray[@"Photos"] stringValue].length > 0) {
-        
-        if ([[jsonPhoto valueForKeyPath:@"check"] boolValue] == YES) {
-            NSLog(@"写真ボタン");
-            CustomButton *btn_Photo = [CustomButton buttonWithType:UIButtonTypeCustom];
-            [btn_Photo setImage:[UIImage imageNamed:@"photo.png"]  forState:UIControlStateNormal];
-            [btn_Photo addTarget:self action:@selector(touch_btnPhoto:) forControlEvents:UIControlEventTouchUpInside];
-            //btn_Photo.urlString = [file objectForKey:@"linkURL"] ;
-            btn_Photo.urlString = [jsonPhoto valueForKeyPath:@"photo_path"];
-            
-            if (i%2==0) {
-                btn_Photo.frame = CGRectMake(-5, 210, 48, 48);
-            }
-            else{
-                btn_Photo.frame = CGRectMake(-5, 245, 48, 48);
-            }
-            contentsView[i].image = [UIImage imageNamed:@"line.png"];
-            [contentsView[i] addSubview:btn_Photo];
+            [contentsView[i] addSubview:time_Label[i]];
             
         }
-        
-        if ([[jsonSounds valueForKeyPath:@"check"] boolValue] == YES) {
-            //btn_Voice
-            NSLog(@"音声ボタン");
-            CustomButton *btn_Voice = [CustomButton buttonWithType:UIButtonTypeCustom];
-            [btn_Voice setImage:[UIImage imageNamed:@"sound.png"]  forState:UIControlStateNormal];
-            [btn_Voice addTarget:self action:@selector(touch_btnVoice:) forControlEvents:UIControlEventTouchUpInside];
-            //btn_Photo.urlString = [file objectForKey:@"linkURL"] ;
-            btn_Voice.urlString = [jsonSounds valueForKeyPath:@"sound_path"];
-            
-            
-            if (i%2==0) {
-                btn_Voice.frame = CGRectMake(-5, 140, 48, 48);
-                
-            }
-            else{
-                btn_Voice.frame = CGRectMake(-5, 175, 48, 48);
-            }
-            [contentsView[i] addSubview:btn_Voice];
-            contentsView[i].image = [UIImage imageNamed:@"line.png"];
-            
-        }
-        if ([[jsonPhoto valueForKeyPath:@"check"] boolValue] == YES || [[jsonSounds valueForKeyPath:@"check"] boolValue] == YES) {
-            CustomButton *btn_Touch = [CustomButton buttonWithType:UIButtonTypeCustom];
-            btn_Touch.adjustsImageWhenHighlighted = NO;
-            [btn_Touch setImage:[UIImage imageNamed:@"touch.png"]  forState:UIControlStateNormal];
-            [btn_Touch addTarget:self action:@selector(touch_btnTouch:) forControlEvents:UIControlEventTouchUpInside];
-            //btn_Photo.urlString = [file objectForKey:@"linkURL"] ;
-            if (i%2==0) {
-                btn_Touch.frame = CGRectMake(-5, 70, 48, 48);
-            }
-            else{
-                btn_Touch.frame = CGRectMake(-5, 105, 48, 48);
-            }
-            [contentsView[i] addSubview:btn_Touch];
-            contentsView[i].image = [UIImage imageNamed:@"line.png"];
-        }
-        
-        
-        */
-        
-        //NSLog(@"ID:%@",[photos objectForKey:@"id"]);
-        
-        
-//        });
-     ///*
+      
 #pragma mark 非同期
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
             NSError* error=nil;
             jsonArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
             NSArray *jsonPhoto = [jsonArray valueForKeyPath:@"Photos"];
             NSArray *jsonSounds = [jsonArray valueForKeyPath:@"Sounds"];
+            NSArray *jsonTouch = [jsonArray valueForKeyPath:@"Touches"];
             NSArray *jsonTemp = [jsonArray valueForKeyPath:@"Temperatures"];
             
-            NSLog(@"番号:%d",i);
-            NSLog(@"時間:%@",[jsonPhoto valueForKeyPath:@"time"]);
+            NSLog(@"タッチ:%@,",[jsonTouch valueForKeyPath:@"check"]);
             
-            if ([[jsonTemp valueForKeyPath:@"check"] boolValue] == YES) {
-                NSLog(@"温度:%@",[jsonTemp valueForKey:@"temperature"]);
-                temp_Label[i].text = [NSString stringWithFormat:@"%d℃",[[jsonTemp valueForKey:@"temperature"] intValue]];
-            }
             
             if ([[jsonPhoto valueForKeyPath:@"check"] boolValue] == YES) {
                 CustomButton *btn_Photo = [CustomButton buttonWithType:UIButtonTypeCustom];
@@ -453,7 +292,7 @@ const float VIEW_WIDTH = 8700;
                 else{
                     btn_Photo.frame = CGRectMake(-5, 245, 48, 48);
                 }
-                contentsView[i].image = [UIImage imageNamed:@"line.png"];
+                
                 [contentsView[i] addSubview:btn_Photo];
                 
             }
@@ -474,10 +313,9 @@ const float VIEW_WIDTH = 8700;
                     btn_Voice.frame = CGRectMake(-5, 175, 48, 48);
                 }
                 [contentsView[i] addSubview:btn_Voice];
-                contentsView[i].image = [UIImage imageNamed:@"line.png"];
                 
             }
-            if ([[jsonPhoto valueForKeyPath:@"check"] boolValue] == YES || [[jsonSounds valueForKeyPath:@"check"] boolValue] == YES) {
+            if ([[jsonPhoto valueForKeyPath:@"check"] boolValue] == YES || [[jsonSounds valueForKeyPath:@"check"] boolValue] == YES || [[jsonTouch valueForKeyPath:@"check"] boolValue] == YES) {
                 CustomButton *btn_Touch = [CustomButton buttonWithType:UIButtonTypeCustom];
                 btn_Touch.adjustsImageWhenHighlighted = NO;
                 [btn_Touch setImage:[UIImage imageNamed:@"touch.png"]  forState:UIControlStateNormal];
@@ -490,50 +328,242 @@ const float VIEW_WIDTH = 8700;
                     btn_Touch.frame = CGRectMake(-5, 105, 48, 48);
                 }
                 [contentsView[i] addSubview:btn_Touch];
-                contentsView[i].image = [UIImage imageNamed:@"line.png"];
+                contentsView[i].image = [UIImage imageNamed:@"sen.png"];
             }
-            
-            
+            if ([[jsonTemp valueForKeyPath:@"check"] boolValue] == YES) {
+                //                NSLog(@"番号:%d",i);
+                //                NSLog(@"温度:%@",[jsonTemp valueForKey:@"temperature"]);
+                temprature_Label[i].text = [NSString stringWithFormat:@"%d℃",[[jsonTemp valueForKey:@"temperature"] intValue]];
+                [contentsView[i] addSubview:temprature_Label[i]];
+                time_Label[i].frame = CGRectMake(-12, -29, 75, 30);
+                
+            }
         }];
         
-      //*/
     }
     
-    //[NSTimer scheduledTimerWithTimeInterval:600 target:self selector:@selector(requestSenserDatas:) userInfo:nil repeats:YES];
+    [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(requestSenserDatas) userInfo:nil repeats:YES];
+}
+
+-(void)requestSenserDatas{
+    [scrollView removeFromSuperview];
+    for (int i = 144; i > 0; --i) {
+        [contentsView[i] removeFromSuperview];
+    }
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    scrollView = [[UIScrollView alloc]init];
+    scrollView.layer.zPosition = 2;
+    scrollView.delegate=self;
+    scrollView.showsHorizontalScrollIndicator = NO;
+    scrollView.bounces =NO;
+    
+    scrollView.userInteractionEnabled = YES;
+    scrollView.decelerationRate = 5;
+    scrollView.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height-100);
+    [scrollView setContentSize:CGSizeMake(VIEW_WIDTH, self.view.frame.size.height-100)];
+    [self.view addSubview:scrollView];
+    scrollView.contentOffset = CGPointMake(8320,0);
+    
+    __block NSDate* START_TIME = [NSDate date];
+    __block NSDate* change_Time = [NSDate date];
+    START_TIME = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
+    change_Time = [NSDate dateWithTimeIntervalSinceNow:[[NSTimeZone systemTimeZone] secondsFromGMT]];
+    
+    NSDateFormatter *formater = [[NSDateFormatter alloc] init];
+    [formater setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    
+    NSCalendar* cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSCalendarUnit unitFlags =  NSCalendarUnitDay| NSCalendarUnitHour | NSCalendarUnitMinute;
+    NSDateComponents *dateComponents_Hour = [cal components:unitFlags fromDate:START_TIME];
+    __block NSInteger START_HOUR = dateComponents_Hour.hour -9;
+    __block NSInteger START_MINUTE = dateComponents_Hour.minute;
+    
+    if (START_HOUR < 0) {
+        START_HOUR +=24;
+    }
+    
+    NSURL *url;
+    NSMutableURLRequest *request;
+    
+    
+    for (int i = 144; i > 0; --i) {
+        
+        contentsView[i] = [[UIImageView alloc] init];
+        contentsView[i].frame = CGRectMake(60*i, 100, 46.875, 300);
+        contentsView[i].tag = i;
+        contentsView[i].layer.zPosition = 1;
+        contentsView[i].userInteractionEnabled = YES;
+        [scrollView addSubview:contentsView[i]];
+        
+        
+#pragma mark ###24時間更新###
+        url = [NSURL URLWithString:@"http://ec2-52-69-253-248.ap-northeast-1.compute.amazonaws.com/api/allSensor"];
+        request = [[NSMutableURLRequest alloc] initWithURL:url];
+        request.HTTPMethod = @"POST";
+        
+        
+        NSString *body = [NSString stringWithFormat:@"edisonName=%@&startTime=%@&duration=%d",[ud valueForKey:@"U_ID"],dbTime_String,10];
+        request.HTTPBody = [body dataUsingEncoding:NSUTF8StringEncoding];
+        START_TIME = [START_TIME dateByAddingTimeInterval:-60*10];
+        [formater setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+        dbTime_String = [formater stringFromDate:START_TIME];
+        
+        
+        dateComponents_Hour = [cal components:unitFlags fromDate:START_TIME];
+        START_HOUR = dateComponents_Hour.hour -9;
+        START_MINUTE = dateComponents_Hour.minute;
+        
+        if (START_HOUR < 0) {
+            START_HOUR +=24;
+        }
+        
+        if ((50 < START_MINUTE && 5<= START_MINUTE%10) || (START_MINUTE < 10 && START_MINUTE%10<= 4)) {
+            time_Label[i] = [[UILabel alloc] init];
+            temprature_Label[i] = [[UILabel alloc] init];
+            NSString *timelabel_BackPath = @"circle.png";
+            UIImage *time_Back = [UIImage imageNamed:timelabel_BackPath];
+            UIImageView *time_Back_View = [[UIImageView alloc] initWithImage:time_Back];
+            time_Back_View.layer.zPosition = 2;
+            time_Back_View.frame = CGRectMake(-24, -44, 88, 88);
+            
+            time_Label[i].frame = CGRectMake(-12, -16, 75, 30);
+            time_Label[i].layer.zPosition = 3;
+            time_Label[i].textColor = [UIColor colorWithRed:190/255.0 green:217/255.0 blue:229/255.0 alpha:1];
+            time_Label[i].textAlignment = NSTextAlignmentCenter;
+            time_Label[i].font = [UIFont fontWithName:@"YuGo-Bold" size:25];
+            time_Label[i].textAlignment = NSTextAlignmentLeft;
+            if (50 < START_MINUTE && 5<= START_MINUTE%10) {
+                if (START_HOUR <= 8) {
+                    time_Label[i].text = [NSString stringWithFormat:@"0%ld:00", START_HOUR+1];
+                }
+                else{
+                    time_Label[i].text = [NSString stringWithFormat:@"%ld:00", START_HOUR+1];
+                }
+            }
+            else{
+                if (START_HOUR <= 9) {
+                    time_Label[i].text = [NSString stringWithFormat:@"0%ld:00", START_HOUR];
+                }
+                else{
+                    time_Label[i].text = [NSString stringWithFormat:@"%ld:00", START_HOUR];
+                }
+            }
+            NSLog(@"温度番号%d:",i);
+            temprature_Label[i].frame = CGRectMake(-1.5, 4, 80, 30);
+            temprature_Label[i].tag = i;
+            temprature_Label[i].layer.zPosition = 3;
+            temprature_Label[i].textColor = [UIColor colorWithRed:190/255.0 green:217/255.0 blue:229/255.0 alpha:1];
+            temprature_Label[i].textAlignment = NSTextAlignmentCenter;
+            temprature_Label[i].font = [UIFont fontWithName:@"YuGo-Bold" size:25];
+            temprature_Label[i].textAlignment = NSTextAlignmentLeft;
+            
+            [contentsView[i] addSubview:time_Back_View];
+            [contentsView[i] addSubview:time_Label[i]];
+            
+        }
+        
+#pragma mark 非同期
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            NSError* error=nil;
+            jsonArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+            NSArray *jsonPhoto = [jsonArray valueForKeyPath:@"Photos"];
+            NSArray *jsonSounds = [jsonArray valueForKeyPath:@"Sounds"];
+            NSArray *jsonTouch = [jsonArray valueForKeyPath:@"Touches"];
+            NSArray *jsonTemp = [jsonArray valueForKeyPath:@"Temperatures"];
+            
+            NSLog(@"タッチ:%@,",[jsonTouch valueForKeyPath:@"check"]);
+            
+            
+            if ([[jsonPhoto valueForKeyPath:@"check"] boolValue] == YES) {
+                CustomButton *btn_Photo = [CustomButton buttonWithType:UIButtonTypeCustom];
+                [btn_Photo setImage:[UIImage imageNamed:@"photo.png"]  forState:UIControlStateNormal];
+                [btn_Photo addTarget:self action:@selector(touch_btnPhoto:) forControlEvents:UIControlEventTouchUpInside];
+                //btn_Photo.urlString = [file objectForKey:@"linkURL"] ;
+                btn_Photo.urlString = [jsonPhoto valueForKeyPath:@"photo_path"];
+                
+                if (i%2==0) {
+                    btn_Photo.frame = CGRectMake(-5, 210, 48, 48);
+                }
+                else{
+                    btn_Photo.frame = CGRectMake(-5, 245, 48, 48);
+                }
+                
+                [contentsView[i] addSubview:btn_Photo];
+                
+            }
+            
+            if ([[jsonSounds valueForKeyPath:@"check"] boolValue] == YES) {
+                CustomButton *btn_Voice = [CustomButton buttonWithType:UIButtonTypeCustom];
+                [btn_Voice setImage:[UIImage imageNamed:@"sound.png"]  forState:UIControlStateNormal];
+                [btn_Voice addTarget:self action:@selector(touch_btnVoice:) forControlEvents:UIControlEventTouchUpInside];
+                //btn_Photo.urlString = [file objectForKey:@"linkURL"] ;
+                btn_Voice.urlString = [jsonSounds valueForKeyPath:@"sound_path"];
+                
+                
+                if (i%2==0) {
+                    btn_Voice.frame = CGRectMake(-5, 140, 48, 48);
+                    
+                }
+                else{
+                    btn_Voice.frame = CGRectMake(-5, 175, 48, 48);
+                }
+                [contentsView[i] addSubview:btn_Voice];
+                
+            }
+            if ([[jsonPhoto valueForKeyPath:@"check"] boolValue] == YES || [[jsonSounds valueForKeyPath:@"check"] boolValue] == YES || [[jsonTouch valueForKeyPath:@"check"] boolValue] == YES) {
+                CustomButton *btn_Touch = [CustomButton buttonWithType:UIButtonTypeCustom];
+                btn_Touch.adjustsImageWhenHighlighted = NO;
+                [btn_Touch setImage:[UIImage imageNamed:@"touch.png"]  forState:UIControlStateNormal];
+                [btn_Touch addTarget:self action:@selector(touch_btnTouch:) forControlEvents:UIControlEventTouchUpInside];
+                //btn_Photo.urlString = [file objectForKey:@"linkURL"] ;
+                if (i%2==0) {
+                    btn_Touch.frame = CGRectMake(-5, 70, 48, 48);
+                }
+                else{
+                    btn_Touch.frame = CGRectMake(-5, 105, 48, 48);
+                }
+                [contentsView[i] addSubview:btn_Touch];
+                contentsView[i].image = [UIImage imageNamed:@"sen.png"];
+            }
+            if ([[jsonTemp valueForKeyPath:@"check"] boolValue] == YES) {
+                //                NSLog(@"番号:%d",i);
+                //                NSLog(@"温度:%@",[jsonTemp valueForKey:@"temperature"]);
+                temprature_Label[i].text = [NSString stringWithFormat:@"%d℃",[[jsonTemp valueForKey:@"temperature"] intValue]];
+                [contentsView[i] addSubview:temprature_Label[i]];
+                time_Label[i].frame = CGRectMake(-12, -29, 75, 30);
+                
+            }
+        }];
+        
+    }
+
+    
 }
 -(void)animation22:(NSTimer*)timer{
     changeCount++;
     if (changeCount %2 == 0) {
-        [view.layer removeAllAnimations];
-        [view1.layer addAnimation:animation1 forKey:nil];
+        [kame_View.layer removeAllAnimations];
+        [kame_View1.layer addAnimation:animation1 forKey:nil];
     }
     else{
-        [view1.layer removeAllAnimations];
-        [view.layer addAnimation:animation forKey:nil];
+        [kame_View1.layer removeAllAnimations];
+        [kame_View.layer addAnimation:animation forKey:nil];
     }
 }
 
 #pragma mark ###写真がタッチされたら呼ばれる###
 -(void)touch_btnPhoto:(id)sender{
     NSLog(@"touch:photo");
-    //sender経由でボタンを取得
-    //UIButton *button = (UIButton *)sender;
-    
-    //仮URL
-    //NSString* path = @"http://ec2-52-69-253-248.ap-northeast-1.compute.amazonaws.com/edison/photos/e5ccc0424016aa86ffe89829400f6f9d.jpg";
     NSURL* photo_url = [NSURL URLWithString:[(CustomButton *)sender urlString]];
     NSData* data = [NSData dataWithContentsOfURL:photo_url];
     UIImage* img = [[UIImage alloc] initWithData:data];
-    // UIImageViewの初期化
     CGRect rect = CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height/2, 320, 240);
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:rect];
     imageView.layer.anchorPoint = CGPointMake(1.0, 1.0);
     imageView.image = img;
-    // UIView
     UIScreen* screen = [UIScreen mainScreen];
     UIView *photo_View = [[UIView alloc] initWithFrame:CGRectMake(0.0,0.0,screen.bounds.size.width,screen.bounds.size.height)];
     photo_View.backgroundColor =  [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.4];
-    //UITapGesture
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(photo_view_Tapped:)];
     
     [photo_View addGestureRecognizer:tapGesture];
@@ -552,12 +582,6 @@ const float VIEW_WIDTH = 8700;
 -(void)touch_btnVoice:(id)sender{
     
     NSURL* voice_url = [NSURL URLWithString:[(CustomButton *)sender urlString]];
-    //sender経由でボタンを取得
-    //UIButton *button = (UIButton *)sender;
-    
-    //仮URL
-    
-    // stremar player
     
     if(self.audioStremarPlayer){
         [self.audioStremarPlayer removeObserver:self forKeyPath:@"status"];
@@ -591,68 +615,12 @@ const float VIEW_WIDTH = 8700;
 -(void)touch_btnTouch:(id)sender{
 
 }
-
--(void)requestSenserDatas:(NSTimer*)timer{
-    NSURL *url = [NSURL URLWithString:@""];
-    NSURLRequest  *request = [[NSURLRequest alloc] initWithURL:url];
-    [NSURLConnection sendAsynchronousRequest:request queue:nil completionHandler:^(NSURLResponse *response, NSData *data, NSError *connefctionError) {
-#pragma mark ###10分更新###
-        for (int i = 144; i > 0; --i) {
-            [contentsView[i] removeFromSuperview];
-            contentsView[i] = [[UIImageView alloc] init];
-            contentsView[i].frame = CGRectMake(60*i, 100, 46.875, 300);
-            contentsView[i].tag = i;
-            contentsView[i].userInteractionEnabled = YES;
-            [scrollView addSubview:contentsView[i]];
-            if (1 >= 0) {
-                
-                UILabel *time_Label = [[UILabel alloc] init];
-                time_Label.frame = CGRectMake(0, 10, 65, 18);
-                time_Label.textColor = [UIColor blackColor];
-                time_Label.font = [UIFont fontWithName:@"AppleGothic" size:12];
-                time_Label.textAlignment = NSTextAlignmentLeft;
-                time_Label.text = @"12:15";
-                
-                UILabel *temp_Label = [[UILabel alloc] init];
-                temp_Label.frame = CGRectMake(0, 25, 25, 18);
-                temp_Label.font = [UIFont fontWithName:@"AppleGothic" size:12];
-                temp_Label.textAlignment = NSTextAlignmentLeft;
-                int random_nummber;
-                random_nummber = arc4random() % 6 + 30;
-                
-                temp_Label.text = [NSString stringWithFormat:@"%d",random_nummber];
-                
-                UIButton *btn_Photo  = [UIButton buttonWithType:UIButtonTypeCustom];
-                btn_Photo.frame = CGRectMake(-5, 50, 40, 40);
-                [btn_Photo setImage:[UIImage imageNamed:@"photo.png"] forState:UIControlStateNormal];
-                UIButton *btn_Voice  = [UIButton buttonWithType:UIButtonTypeCustom];
-                btn_Voice.frame = CGRectMake(-5, 120, 40, 40);
-                [btn_Voice setImage:[UIImage imageNamed:@"sound.png"] forState:UIControlStateNormal];
-                UIButton *btn_Touch  = [UIButton buttonWithType:UIButtonTypeCustom];
-                btn_Touch.frame = CGRectMake(-5, 190, 40, 40);
-                btn_Touch.enabled = NO;
-                btn_Touch.adjustsImageWhenDisabled = NO;
-                [btn_Touch setImage:[UIImage imageNamed:@"touch.png"] forState:UIControlStateNormal];
-                [contentsView[i] addSubview:time_Label];
-                [contentsView[i] addSubview:temp_Label];
-                [contentsView[i] addSubview:btn_Touch];
-                [contentsView[i] addSubview:btn_Photo];
-                [contentsView[i] addSubview:btn_Touch];
-                [contentsView[i] addSubview:btn_Voice];
-            }
-        }
-    }];
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)sender
-{
-    //    NSLog(@"オフセット:x:%f,y:%f",scrollView.contentOffset.x,scrollView.contentOffset.y);
-}
+
 - (IBAction)touch_btnSetting:(id)sender {
     UIAlertView *alert = [[UIAlertView alloc] init];
     alert.delegate = self;
@@ -668,15 +636,24 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     
     switch (buttonIndex) {
         case 0:
-            //いいえ
             break;
         case 1:{
-            //はい
             NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
             [ud removeObjectForKey:@"U_ID"];
             [ud synchronize];
-            LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"login"];
-            [self presentViewController:loginViewController animated:NO completion:nil];
+            imageList = nil;
+            imageList1 = nil;
+            imageList_Umi = nil;
+            self.audioStremarPlayer = nil;
+            self.umi_View = nil;
+            kame_ImgView = nil;
+            kame_ImgView1 = nil;
+            for (int i = 0; i<144; i++) {
+                
+                contentsView[i] = nil;
+            }
+            [animeTimer invalidate];
+            [self dismissViewControllerAnimated:YES completion:nil];
         }
             break;
     }

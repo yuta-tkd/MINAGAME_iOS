@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
+#import <QuartzCore/QuartzCore.h>
 #import "CustomButton.h"
 
 @interface MainViewController : UIViewController<UIScrollViewDelegate,AVAudioPlayerDelegate,UIWebViewDelegate>{
@@ -18,37 +19,36 @@
     CGMutablePathRef curvedPath1;
     CGMutablePathRef curvedPath;
     
-    UIImage *image;
-    UIImageView *imageview;
-    UIView *view;
+    UIImage *kame_Image;
+    UIImageView *kame_ImgView;
+    UIView *kame_View;
     NSDictionary *jsonArray;
     CustomButton *customButton;
     NSString* dbTime_String;
     int changeCount;
     int not_One;
-    
-    // CAKeyframeAnimationオブジェクトを生成
     CAKeyframeAnimation *animation;
 
-    UIImage *image1;
-    UIImageView *imageview1;
-    UIView *view1;
-    UILabel *temp_Label[144];
-    
-    // CAKeyframeAnimationオブジェクトを生成
+    UIImage *kame_Image1;
+    UIImageView *kame_ImgView1;
+    UIView *kame_View1;
+    UILabel *temprature_Label[144];
+    UILabel *time_Label[144];
+    NSTimer *animeTimer;
+    NSMutableArray *imageList;
+    NSMutableArray *imageList1;
+    NSMutableArray *imageList_Umi;
     CAKeyframeAnimation *animation1;
 
-    //UIImageView *imageview;
-    //UIView *view;
 }
 @property (weak, nonatomic) IBOutlet UIImageView *umi_View;
 @property (weak, nonatomic) IBOutlet UIButton *btn_Setting;
 - (IBAction)touch_btnSetting:(id)sender;
 
-@property (weak, nonatomic) IBOutlet UIImageView *umiView;
 @property(nonatomic) AVAudioPlayer *audioPlayer;
 @property (nonatomic,strong) AVPlayer *audioStremarPlayer;
 @property (nonatomic, retain) CustomButton *customButton;
+
 
 @end
 

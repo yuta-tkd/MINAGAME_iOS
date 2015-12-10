@@ -20,12 +20,10 @@
     // Override point for customization after application launch.
     
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-    
-    LoginViewController *loginview;
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.frame = CGRectMake(0, 0, [[UIScreen mainScreen]bounds].size.width, [[UIScreen mainScreen]bounds].size.height);
-    loginview = [[UIStoryboard storyboardWithName:@"Main"  bundle:nil] instantiateViewControllerWithIdentifier:@"login"];
     
+    LoginViewController *loginview = [[UIStoryboard storyboardWithName:@"Main"  bundle:nil] instantiateViewControllerWithIdentifier:@"login"];
     self.window.rootViewController = loginview;
     [self.window makeKeyAndVisible];
     
